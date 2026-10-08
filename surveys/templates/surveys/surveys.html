@@ -1,0 +1,322 @@
+{% extends 'surveys/base.html' %}
+{% block title %}Available Surveys | PennySurveys{% endblock %}
+{% block show_sidebar %}1{% endblock %}
+{% block extra_css %}
+<style>
+  body.dashboard-page {
+    overflow-x: hidden;
+  }
+  body.dashboard-page .main-content {
+    margin-left: 310px;
+    max-width: calc(100vw - 310px);
+    width: 100%;
+    padding: 0 1rem;
+    padding-top: 2rem;
+    box-sizing: border-box;
+  }
+  body.dashboard-page .container {
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  @media (max-width: 991.98px) {
+    body.dashboard-page .main-content {
+      margin-left: 0;
+      max-width: 100%;
+      padding: 0 1rem;
+      padding-top: 2rem;
+    }
+  }
+</style>
+{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<script src="https://code.iconify.design/3/3.1.1/iconify.min.js"></script>
+<style>
+  .survey-header {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    margin-bottom: 1.2rem;
+  }
+  .survey-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.2rem;
+  }
+  .survey-subtitle {
+    color: #888;
+    font-size: 1.1rem;
+    margin-bottom: 1.2rem;
+  }
+  .survey-type-badge {
+    font-size: 0.98rem;
+    font-weight: 600;
+    border-radius: 1rem;
+    padding: 0.2rem 0.9rem;
+    margin-right: 0.5rem;
+    background: #f3f4fa;
+    color: #6366f1;
+    border: none;
+  }
+  .survey-type-badge.paid {
+    background: #fff4e6;
+    color: #fd7e14;
+  }
+  .survey-type-badge.free {
+    background: #f3f4fa;
+    color: #6366f1;
+  }
+  .survey-type-badge.system {
+    background: #e6f9e6;
+    color: #22c55e;
+  }
+  .survey-card {
+    border-radius: 1.1rem;
+    box-shadow: 0 2px 8px rgba(60,72,120,0.07);
+    padding: 1.2rem 1.3rem 1rem 1.3rem;
+    background: #fff;
+    border: none;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .survey-card.system {
+    background: #e6f9e6;
+    border: 1px solid #b6e7b6;
+  }
+  .survey-card.paid {
+    background: #fffbe6;
+    border: 1px solid #ffe0b2;
+  }
+  .survey-card.free {
+    background: #f8f9fa;
+    border: 1px solid #e0e0e0;
+  }
+  .survey-reward {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #22c55e;
+    margin-bottom: 0.2rem;
+  }
+  .survey-reward.paid {
+    color: #fd7e14;
+  }
+  .survey-reward.free {
+    color: #6366f1;
+  }
+  .survey-btn {
+    font-weight: 600;
+    border-radius: 0.7rem;
+    padding: 0.6rem 1.2rem;
+    font-size: 1rem;
+    width: 100%;
+    margin-top: auto;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .survey-meta {
+    color: #888;
+    font-size: 0.98rem;
+    margin-top: 0.5rem;
+  }
+  .survey-icon {
+    font-size: 2rem;
+    margin-right: 0.7rem;
+    color: #6366f1;
+  }
+  .survey-card .crown {
+    color: #fd7e14;
+    font-size: 1.2rem;
+    margin-left: 0.3rem;
+  }
+  .survey-card .crown.free {
+    color: #bbb;
+  }
+  .survey-card .crown.system {
+    color: #22c55e;
+  }
+  .first-survey-badge {
+    background: #e6f9e6;
+    color: #22c55e;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.5rem;
+    margin-left: 0.5rem;
+  }
+  
+  /* Blur effect for modal background */
+  .modal-backdrop-blur {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+  
+  /* Add blur to body when modal is open */
+  body.modal-open {
+    overflow: hidden;
+  }
+  
+  body.modal-open .container {
+    filter: blur(3px);
+    transition: filter 0.3s ease;
+  }
+  
+  /* Mobile modal button centering */
+  @media (max-width: 768px) {
+    .modal-footer {
+      flex-direction: column;
+      gap: 0.5rem;
+      padding: 1rem;
+    }
+    
+    .modal-footer .btn {
+      width: 100%;
+      margin: 0;
+    }
+    
+    .modal-dialog {
+      margin: 1rem;
+      max-width: calc(100% - 2rem);
+    }
+    
+    .modal-body {
+      padding: 1.5rem 1rem;
+    }
+  }
+  
+  /* Subscription button centering */
+  .subscription-btn {
+    text-align: center !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    white-space: nowrap;
+    min-width: 200px;
+  }
+  
+  .subscription-btn:hover {
+    text-align: center !important;
+  }
+</style>
+<div class="container my-4" style="padding-top: 2rem;">
+  <div class="survey-title">Available Surveys</div>
+  <div class="survey-subtitle">Complete surveys and earn rewards</div>
+  
+  <div class="mb-3">
+    <span class="survey-type-badge paid"><span class="iconify" data-icon="mdi:crown" style="vertical-align:middle;"></span> Paid Survey</span>
+    <span class="survey-type-badge free"><span class="iconify" data-icon="mdi:crown-outline" style="vertical-align:middle;"></span> Free Survey</span>
+  </div>
+  
+  <div class="row g-3">
+  {% for survey in surveys %}
+    <div class="col-12 col-md-6 col-lg-4">
+      <div class="survey-card {{ survey.type }} h-100">
+      {% if survey.type == 'system' %}
+        <div class="mb-2" style="color:#22c55e; font-weight:600;">System Survey - Always Available</div>
+      {% endif %}
+        <div class="d-flex flex-column h-100">
+          <div class="d-flex align-items-center mb-2">
+          <span class="iconify survey-icon" data-icon="mdi:clipboard-text-outline"></span>
+            <div class="flex-grow-1">
+            <div class="fw-semibold">{{ survey.title }}
+              {% if survey.type == 'paid' %}
+                <span class="iconify crown" data-icon="mdi:crown"></span>
+              {% elif survey.type == 'free' %}
+                <span class="iconify crown free" data-icon="mdi:crown-outline"></span>
+              {% elif survey.type == 'system' %}
+                <span class="iconify crown system" data-icon="mdi:crown"></span>
+              {% endif %}
+                {% if not has_taken_first_survey and survey.title == 'SurveysPlus' %}
+                  <span class="first-survey-badge">FREE FIRST</span>
+                {% endif %}
+            </div>
+            <div class="text-muted" style="font-size:0.98rem;">{{ survey.questions }} questions</div>
+          </div>
+        </div>
+          
+          <div class="text-center mb-2">
+          <div class="survey-reward {{ survey.type }}">
+            <span class="iconify" data-icon="mdi:currency-usd"></span> Ksh {{ survey.reward }}
+            </div>
+          </div>
+          
+          <div class="text-center mb-2">
+            {% if survey.type == 'system' or has_active_subscription %}
+              <!-- System surveys (always free) or users with active subscription -->
+              <a href="{% url 'take_survey' survey.title %}" class="btn btn-primary survey-btn w-100">Take Survey</a>
+            {% else %}
+              <!-- All other surveys require subscription -->
+              <button type="button" class="btn btn-primary survey-btn w-100" 
+                      data-bs-toggle="modal" 
+                      data-bs-target="#paidSurveyModal"
+                      data-reward="{{ survey.reward }}"
+                      data-survey-title="{{ survey.title }}">
+                Take Survey
+              </button>
+            {% endif %}
+          </div>
+          
+          <div class="survey-meta text-center mt-auto">Estimated time: {{ survey.estimated_time }} mins</div>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+  </div>
+</div>
+
+<!-- Paid Survey Modal -->
+<div class="modal fade modal-backdrop-blur" id="paidSurveyModal" tabindex="-1" aria-labelledby="paidSurveyModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header border-0">
+        <h5 class="modal-title" id="paidSurveyModalLabel">Paid Survey</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center">
+        <span class="iconify" data-icon="mdi:lock-outline" style="font-size:3rem; color:#6c63ff;"></span>
+        <div class="fw-bold mt-3 mb-2" style="font-size:1.2rem;">Subscribe to Access Paid Surveys</div>
+        <div id="paidSurveyModalMsg" style="color:#555; font-size:1.05rem;">
+          This is a paid survey worth Ksh <span id="paidSurveyReward">75</span>. Subscribe to a plan to start earning from paid surveys.
+        </div>
+      </div>
+      <div class="modal-footer border-0 justify-content-center">
+        <button type="button" class="btn btn-outline-secondary px-4" data-bs-dismiss="modal">Cancel</button>
+        <a href="/subscriptions/" class="btn btn-primary px-4 subscription-btn" id="subscriptionLink">View Subscription Plans</a>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  // Fill in the reward amount dynamically in the modal and handle blur effect
+  document.addEventListener('DOMContentLoaded', function() {
+    var paidSurveyModal = document.getElementById('paidSurveyModal');
+    var rewardSpan = document.getElementById('paidSurveyReward');
+    var subscriptionLink = document.getElementById('subscriptionLink');
+    var body = document.body;
+    
+    // When modal opens
+    paidSurveyModal.addEventListener('show.bs.modal', function (event) {
+      var button = event.relatedTarget;
+      var reward = button.getAttribute('data-reward');
+      var surveyTitle = button.getAttribute('data-survey-title');
+      rewardSpan.textContent = reward;
+      
+      // Update subscription link to include survey title
+      subscriptionLink.href = '/subscriptions/?survey=' + encodeURIComponent(surveyTitle);
+      
+      // Add blur effect to background
+      body.classList.add('modal-open');
+    });
+    
+    // When modal closes
+    paidSurveyModal.addEventListener('hidden.bs.modal', function (event) {
+      // Remove blur effect from background
+      body.classList.remove('modal-open');
+    });
+  });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+{% endblock %} 

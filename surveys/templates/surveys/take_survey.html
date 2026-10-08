@@ -1,0 +1,334 @@
+{% extends 'surveys/base.html' %}
+{% block title %}{{ survey_title }} Survey | PennySurveys{% endblock %}
+{% block show_sidebar %}1{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<script src="https://code.iconify.design/3/3.1.1/iconify.min.js"></script>
+<style>
+  .survey-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+  }
+  .survey-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #f0f0f0;
+  }
+  .survey-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 0.5rem;
+  }
+  .survey-subtitle {
+    color: #666;
+    font-size: 1.1rem;
+  }
+  .question-card {
+    background: #fff;
+    border-radius: 1rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid #e0e0e0;
+  }
+  .question-number {
+    background: #6366f1;
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    margin-right: 1rem;
+  }
+  .question-text {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 1rem;
+  }
+  .required-badge {
+    background: #ef4444;
+    color: white;
+    font-size: 0.8rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.5rem;
+    margin-left: 0.5rem;
+  }
+  .option-item {
+    background: #f8f9fa;
+    border: 2px solid #e9ecef;
+    border-radius: 0.5rem;
+    padding: 0.8rem 1rem;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .option-item:hover {
+    background: #e9ecef;
+    border-color: #6366f1;
+  }
+  .option-item.selected {
+    background: #6366f1;
+    color: white;
+    border-color: #6366f1;
+  }
+  .rating-stars {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    margin: 1rem 0;
+  }
+  .star {
+    font-size: 2rem;
+    color: #ddd;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+  .star:hover,
+  .star.active {
+    color: #ffd700;
+  }
+  .text-input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px solid #e9ecef;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    resize: vertical;
+    min-height: 100px;
+  }
+  .text-input:focus {
+    outline: none;
+    border-color: #6366f1;
+  }
+  .yes-no-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin: 1rem 0;
+  }
+  .yes-no-btn {
+    padding: 0.8rem 2rem;
+    border: 2px solid #e9ecef;
+    border-radius: 0.5rem;
+    background: white;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: 600;
+  }
+  .yes-no-btn:hover,
+  .yes-no-btn.selected {
+    background: #6366f1;
+    color: white;
+    border-color: #6366f1;
+  }
+  .submit-section {
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 2px solid #f0f0f0;
+  }
+  .submit-btn {
+    background: #22c55e;
+    color: white;
+    border: none;
+    padding: 1rem 3rem;
+    border-radius: 0.8rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .submit-btn:hover {
+    background: #16a34a;
+  }
+  .submit-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+  }
+  .progress-bar {
+    background: #f0f0f0;
+    height: 8px;
+    border-radius: 4px;
+    margin-bottom: 2rem;
+    overflow: hidden;
+  }
+  .progress-fill {
+    background: #22c55e;
+    height: 100%;
+    transition: width 0.3s;
+  }
+</style>
+
+<div class="survey-container">
+  <div class="survey-header">
+    <div class="survey-title">{{ survey_title }}</div>
+    <div class="survey-subtitle">Please answer all required questions to complete the survey</div>
+  </div>
+
+  <div class="progress-bar">
+    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+  </div>
+
+  <form method="post" id="surveyForm">
+    {% csrf_token %}
+    
+    {% for question in questions %}
+    <div class="question-card" data-question="{{ question.number }}">
+      <div class="d-flex align-items-start mb-3">
+        <div class="question-number">{{ question.number }}</div>
+        <div class="flex-grow-1">
+          <div class="question-text">
+            {{ question.question }}
+            {% if question.required %}
+              <span class="required-badge">Required</span>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      {% if question.type == 'multiple_choice' %}
+        <div class="options-container">
+          {% for option in question.options %}
+          <div class="option-item" onclick="selectOption(this, '{{ question.number }}', '{{ option }}')">
+            <input type="radio" name="q{{ question.number }}" value="{{ option }}" style="display: none;" {% if question.required %}required{% endif %}>
+            {{ option }}
+          </div>
+          {% endfor %}
+        </div>
+
+      {% elif question.type == 'rating' %}
+        <div class="rating-stars">
+          {% for i in "12345" %}
+          <span class="star" onclick="selectRating('{{ question.number }}', {{ i }})" data-rating="{{ i }}">★</span>
+          {% endfor %}
+        </div>
+        <input type="hidden" name="q{{ question.number }}" id="rating{{ question.number }}" {% if question.required %}required{% endif %}>
+
+      {% elif question.type == 'text' %}
+        <textarea class="text-input" name="q{{ question.number }}" placeholder="Please provide your answer here..." {% if question.required %}required{% endif %}></textarea>
+
+      {% elif question.type == 'yes_no' %}
+        <div class="yes-no-buttons">
+          <div class="yes-no-btn" onclick="selectYesNo(this, '{{ question.number }}', 'Yes')">
+            <input type="radio" name="q{{ question.number }}" value="Yes" style="display: none;" {% if question.required %}required{% endif %}>
+            Yes
+          </div>
+          <div class="yes-no-btn" onclick="selectYesNo(this, '{{ question.number }}', 'No')">
+            <input type="radio" name="q{{ question.number }}" value="No" style="display: none;" {% if question.required %}required{% endif %}>
+            No
+          </div>
+        </div>
+      {% endif %}
+    </div>
+    {% endfor %}
+
+    <div class="submit-section">
+      <button type="submit" class="submit-btn" id="submitBtn" disabled>
+        <span class="iconify" data-icon="mdi:check"></span>
+        Complete Survey
+      </button>
+    </div>
+  </form>
+</div>
+
+<script>
+  // Track answered questions
+  let answeredQuestions = new Set();
+  const totalQuestions = parseInt('{{ questions|length }}');
+
+  function updateProgress() {
+    const progress = (answeredQuestions.size / totalQuestions) * 100;
+    document.getElementById('progressFill').style.width = progress + '%';
+    
+    // Enable submit button if all required questions are answered
+    const submitBtn = document.getElementById('submitBtn');
+    if (answeredQuestions.size === totalQuestions) {
+      submitBtn.disabled = false;
+    } else {
+      submitBtn.disabled = true;
+    }
+  }
+
+  function selectOption(element, questionNum, value) {
+    // Remove selection from other options in this question
+    const questionCard = element.closest('.question-card');
+    questionCard.querySelectorAll('.option-item').forEach(item => {
+      item.classList.remove('selected');
+    });
+    
+    // Select this option
+    element.classList.add('selected');
+    element.querySelector('input[type="radio"]').checked = true;
+    
+    // Track answered question
+    answeredQuestions.add(questionNum);
+    updateProgress();
+  }
+
+  function selectRating(questionNum, rating) {
+    // Update stars
+    const stars = document.querySelectorAll(`[onclick="selectRating('${questionNum}', ${rating})"]`);
+    stars.forEach((star, index) => {
+      if (index < rating) {
+        star.classList.add('active');
+      } else {
+        star.classList.remove('active');
+      }
+    });
+    
+    // Set hidden input value
+    document.getElementById(`rating${questionNum}`).value = rating;
+    
+    // Track answered question
+    answeredQuestions.add(questionNum);
+    updateProgress();
+  }
+
+  function selectYesNo(element, questionNum, value) {
+    // Remove selection from other buttons in this question
+    const questionCard = element.closest('.question-card');
+    questionCard.querySelectorAll('.yes-no-btn').forEach(btn => {
+      btn.classList.remove('selected');
+    });
+    
+    // Select this button
+    element.classList.add('selected');
+    element.querySelector('input[type="radio"]').checked = true;
+    
+    // Track answered question
+    answeredQuestions.add(questionNum);
+    updateProgress();
+  }
+
+  // Handle text input changes
+  document.addEventListener('DOMContentLoaded', function() {
+    const textInputs = document.querySelectorAll('.text-input');
+    textInputs.forEach(input => {
+      input.addEventListener('input', function() {
+        const questionNum = this.name.replace('q', '');
+        if (this.value.trim() !== '') {
+          answeredQuestions.add(questionNum);
+        } else {
+          answeredQuestions.delete(questionNum);
+        }
+        updateProgress();
+      });
+    });
+  });
+
+  // Form submission
+  document.getElementById('surveyForm').addEventListener('submit', function(e) {
+    // Allow submission even if not all questions are answered (some might be optional)
+    console.log('Submitting survey with', answeredQuestions.size, 'out of', totalQuestions, 'questions answered');
+  });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+{% endblock %} 

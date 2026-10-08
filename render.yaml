@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: penny-surveys
+    env: python
+    buildCommand: chmod +x build.sh && ./build.sh
+    startCommand: gunicorn PennySurveys.wsgi:application
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: DEBUG
+        value: False
+      - key: ALLOWED_HOSTS
+        value: penny-surveys-2.onrender.com 

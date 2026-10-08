@@ -1,0 +1,280 @@
+{% extends 'surveys/base.html' %}
+{% block title %}Settings | PennySurveys{% endblock %}
+{% block show_sidebar %}1{% endblock %}
+{% block extra_css %}
+<style>
+  body.dashboard-page {
+    overflow-x: hidden;
+  }
+  body.dashboard-page .main-content {
+    margin-left: 310px;
+    max-width: calc(100vw - 310px);
+    width: 100%;
+    padding: 0 1rem;
+    padding-top: 2rem;
+    box-sizing: border-box;
+  }
+  body.dashboard-page .container {
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  @media (max-width: 991.98px) {
+    body.dashboard-page .main-content {
+      margin-left: 0;
+      max-width: 100%;
+      padding: 0 1rem;
+      padding-top: 2rem;
+    }
+  }
+</style>
+{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<script src="https://code.iconify.design/3/3.1.1/iconify.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<style>
+  .settings-section {
+    background: #fff;
+    border-radius: 1.1rem;
+    box-shadow: 0 2px 8px rgba(60,72,120,0.07);
+    margin-bottom: 1.5rem;
+    padding: 1.5rem 1.5rem 1.2rem 1.5rem;
+  }
+  .settings-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+  }
+  .settings-label {
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 0.7rem;
+  }
+  .settings-btn {
+    background: #6366f1;
+    color: #fff;
+    border: none;
+    border-radius: 0.7rem;
+    font-weight: 600;
+    padding: 0.5rem 1.3rem;
+    font-size: 1rem;
+    transition: background 0.2s;
+    text-decoration: none;
+  }
+  .settings-btn:hover, .settings-btn:focus {
+    background: #3b82f6;
+    color: #fff;
+  }
+  .settings-card {
+    background: #f8f9fa;
+    border-radius: 1rem;
+    padding: 1.2rem 1.5rem;
+    margin-bottom: 1rem;
+    border: none;
+  }
+  .settings-profile-icon {
+    background: #f3f4fa;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: #6366f1;
+    margin-right: 1rem;
+  }
+  .settings-method-icon {
+    background: #e6fff4;
+    border-radius: 50%;
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    color: #22c55e;
+    margin-right: 1rem;
+  }
+  .settings-section-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+  .settings-balance-card {
+    background: #fff;
+    border-radius: 0.8rem;
+    padding: 1.2rem 1.5rem;
+    margin-bottom: 0.5rem;
+    border: 1px solid #f0f0f0;
+  }
+  .settings-balance-label {
+    color: #888;
+    font-size: 1rem;
+    margin-bottom: 0.2rem;
+  }
+  .settings-balance-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #222;
+  }
+  .settings-action-btn {
+    background: #6366f1;
+    color: #fff;
+    border: none;
+    border-radius: 0.7rem;
+    font-weight: 600;
+    padding: 0.4rem 1.2rem;
+    font-size: 1rem;
+    margin-left: 1rem;
+    transition: background 0.2s;
+  }
+  .settings-action-btn:hover, .settings-action-btn:focus {
+    background: #3b82f6;
+    color: #fff;
+  }
+  .settings-section .row + .row {
+    margin-top: 1.5rem;
+  }
+  
+  /* Modal backdrop blur effect */
+  .modal-backdrop {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    background-color: rgba(0, 0, 0, 0.3) !important;
+  }
+  
+  .modal-backdrop.show {
+    opacity: 1;
+  }
+</style>
+<div class="container my-4">
+  <div class="settings-title">Settings</div>
+
+  <div class="settings-section">
+    <div class="settings-section-title">Profile Information</div>
+    <div class="settings-card d-flex align-items-center mb-2">
+      <div class="settings-profile-icon">
+        <span class="iconify" data-icon="mdi:account-outline"></span>
+      </div>
+      <div>
+        <div class="fw-semibold">{{ profile.full_name|default:request.user.username }}</div>
+        <div class="text-muted" style="font-size:0.98rem;">{{ request.user.email }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="settings-section">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+      <div class="settings-section-title">Payment Methods</div>
+      <button class="settings-btn">Add Payment Method</button>
+    </div>
+    {% if profile and profile.mpesa_number %}
+    <div class="settings-card d-flex align-items-center justify-content-between">
+      <div class="d-flex align-items-center">
+        <div class="settings-method-icon">
+          <span class="iconify" data-icon="mdi:cellphone"></span>
+        </div>
+        <div>
+          <div class="fw-semibold">M-PESA</div>
+          <div class="text-muted" style="font-size:0.98rem;">{{ profile.mpesa_number }}</div>
+        </div>
+      </div>
+      <a href="#" class="settings-btn" style="background:#f3f4fa; color:#6366f1; font-weight:600;" data-bs-toggle="modal" data-bs-target="#editMpesaModal">Edit</a>
+    </div>
+
+    <!-- Edit M-PESA Modal -->
+    <div class="modal fade" id="editMpesaModal" tabindex="-1" aria-labelledby="editMpesaModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form method="post" action="/add-mpesa-number/?next=/settings/">
+            {% csrf_token %}
+            <div class="modal-header">
+              <h5 class="modal-title" id="editMpesaModalLabel">Edit M-PESA Number</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="mb-3">
+                <label for="edit_mpesa_number" class="form-label">M-PESA Phone Number</label>
+                <input type="text" class="form-control" id="edit_mpesa_number" name="mpesa_number" placeholder="e.g. 07XXXXXXXX" required maxlength="20" value="{{ profile.mpesa_number }}">
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    {% else %}
+    <div class="settings-card text-center text-muted">
+      No payment method added yet.<br>
+      <span style="font-size:0.98rem;">Add your M-PESA number to receive payments.</span>
+    </div>
+    {% endif %}
+  </div>
+
+  <div class="settings-section">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+      <div class="settings-section-title">Withdrawal</div>
+      <a href="/withdraw/" class="settings-btn"><span class="iconify" data-icon="mdi:currency-usd"></span> Withdraw Funds</a>
+    </div>
+    <div class="settings-balance-card">
+      <div class="settings-balance-label">Available Balance</div>
+      <div class="settings-balance-value">Ksh {{ user.userprofile.total_earnings|default:0|floatformat:0 }}</div>
+    </div>
+  </div>
+
+  <div class="settings-section">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+      <div class="settings-section-title">Security</div>
+      <button class="settings-btn" data-bs-toggle="modal" data-bs-target="#changePasswordModal">Change Password</button>
+    </div>
+    <div class="settings-card d-flex align-items-center">
+      <div class="settings-profile-icon" style="background:#fff4e6; color:#fd7e14;">
+        <span class="iconify" data-icon="mdi:lock-outline"></span>
+      </div>
+      <div>
+        <div class="fw-semibold">Password</div>
+        <div class="text-muted" style="font-size:0.98rem;">Last changed: Never changed</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Change Password Modal -->
+  <div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form method="post" action="/change-password/">
+          {% csrf_token %}
+          <div class="modal-header">
+            <h5 class="modal-title" id="changePasswordModalLabel">Change Password</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="current_password" class="form-label">Current Password</label>
+              <input type="password" class="form-control" id="current_password" name="current_password" required>
+            </div>
+            <div class="mb-3">
+              <label for="new_password1" class="form-label">New Password</label>
+              <input type="password" class="form-control" id="new_password1" name="new_password1" required>
+              <div class="form-text">Password must be at least 8 characters long.</div>
+            </div>
+            <div class="mb-3">
+              <label for="new_password2" class="form-label">Confirm New Password</label>
+              <input type="password" class="form-control" id="new_password2" name="new_password2" required>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary">Change Password</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %} 

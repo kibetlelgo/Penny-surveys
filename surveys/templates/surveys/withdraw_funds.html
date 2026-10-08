@@ -1,0 +1,211 @@
+{% extends 'surveys/base.html' %}
+
+{% block extra_css %}
+<style>
+  body.dashboard-page .main-content {
+    margin-left: 280px;
+    max-width: calc(100vw - 280px);
+    padding: 2rem;
+    padding-top: 2rem;
+    overflow-x: hidden;
+  }
+  
+  @media (max-width: 991.98px) {
+    body.dashboard-page .main-content {
+      margin-left: 0;
+      max-width: 100vw;
+      padding: 1rem;
+      padding-top: 2rem;
+    }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<style>
+  .withdraw-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+  }
+  
+  .withdraw-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  
+  .balance-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .balance-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .balance-label {
+    font-size: 0.9rem;
+    color: #6b7280;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+  }
+  
+  .balance-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1f2937;
+  }
+  
+  .payment-method-card {
+    background: #f0f9ff;
+    border: 1px solid #e0f2fe;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .payment-method-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+  
+  .payment-icon {
+    width: 24px;
+    height: 24px;
+    background: #6366f1;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 0.75rem;
+  }
+  
+  .payment-icon .iconify {
+    color: white;
+    font-size: 14px;
+  }
+  
+  .payment-title {
+    font-weight: 600;
+    color: #1f2937;
+    font-size: 1rem;
+  }
+  
+  .payment-message {
+    color: #6b7280;
+    font-size: 0.9rem;
+    margin: 0;
+  }
+  
+  .action-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+  }
+  
+  .btn-cancel {
+    background: white;
+    border: 1px solid #d1d5db;
+    color: #374151;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 500;
+    text-decoration: none;
+    display: inline-block;
+  }
+  
+  .btn-cancel:hover {
+    background: #f9fafb;
+    color: #374151;
+    text-decoration: none;
+  }
+  
+  .btn-withdraw {
+    background: #9ca3af;
+    border: none;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: not-allowed;
+    text-decoration: none;
+  }
+  
+  .btn-withdraw.active {
+    background: #6366f1;
+    cursor: pointer;
+  }
+  
+  .btn-withdraw.active:hover {
+    background: #4f46e5;
+  }
+  
+  @media (max-width: 640px) {
+    .balance-cards {
+      grid-template-columns: 1fr;
+    }
+    
+    .action-buttons {
+      flex-direction: column;
+    }
+    
+    .btn-cancel, .btn-withdraw {
+      width: 100%;
+      text-align: center;
+    }
+  }
+</style>
+
+<div class="withdraw-container">
+  <h1 class="withdraw-title">Withdraw Funds</h1>
+  
+  <div class="balance-cards">
+    <div class="balance-card">
+      <div class="balance-label">Current Balance</div>
+      <div class="balance-value">Ksh {{ user.userprofile.total_earnings|default:0|floatformat:0 }}</div>
+    </div>
+    <div class="balance-card">
+      <div class="balance-label">Minimum Withdrawal</div>
+      <div class="balance-value">Ksh 3000</div>
+    </div>
+  </div>
+  
+  <div class="payment-method-card">
+    <div class="payment-method-header">
+      <div class="payment-icon">
+        <span class="iconify" data-icon="mdi:cellphone"></span>
+      </div>
+      <div class="payment-title">M-PESA Payment</div>
+    </div>
+    <p class="payment-message">Please add your M-PESA number in settings first</p>
+  </div>
+  
+  <div class="action-buttons">
+    <a href="/settings/" class="btn-cancel">Cancel</a>
+    <button class="btn-withdraw" id="withdrawBtn" disabled>
+      Withdraw Funds
+    </button>
+  </div>
+</div>
+
+<script>
+  // Withdraw button is permanently disabled
+  document.addEventListener('DOMContentLoaded', function() {
+    const withdrawBtn = document.getElementById('withdrawBtn');
+    
+    // Ensure button stays disabled
+    withdrawBtn.disabled = true;
+    withdrawBtn.classList.remove('active');
+  });
+</script>
+{% endblock %} 

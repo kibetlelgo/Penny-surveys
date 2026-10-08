@@ -1,0 +1,722 @@
+{% extends 'surveys/base.html' %}
+{% load static %}
+{% block title %}Index | PennySurveys{% endblock %}
+{% block content %}
+<style>
+  .fade-in {
+    opacity: 0;
+    animation: fadeIn 1.5s ease-in forwards;
+  }
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+  .hero-fullwidth {
+    width: 100vw;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(90deg, #6366f1 0%, #3b82f6 100%);
+    color: #fff;
+    border-radius: 0;
+    padding: 0;
+    margin-top: 0;
+    margin-bottom: 3.5rem;
+  }
+  .hero-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 32px;
+    margin-left: 1rem;
+  }
+  .hero-highlight {
+    color: #fff;
+    text-shadow: 0 2px 8px rgba(99,102,241,0.25), 0 1px 0 #3b82f6;
+    font-weight: 900;
+  }
+  .hero-btn-wide {
+    min-width: 220px;
+    width: 100%;
+    max-width: 320px;
+  }
+  @media (max-width: 600px) {
+    .hero-btn-wide {
+      min-width: 0;
+      width: 100%;
+      max-width: 100%;
+    }
+  }
+  .footer-fullwidth {
+    width: 100vw;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    background: #000;
+    color: #fff;
+    padding: 48px 0 24px 0;
+    margin-top: 3.5rem;
+    box-sizing: border-box;
+  }
+  .footer-content {
+    width: 100vw;
+    max-width: 100vw;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 32px;
+    padding: 0 8px;
+    box-sizing: border-box;
+  }
+  .footer-col {
+    min-width: 180px;
+    flex: 1 1 220px;
+  }
+  .footer-content h5, .footer-content h6 {
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 1rem;
+  }
+  .footer-content h5 {
+    font-size: 1.5rem;
+  }
+  .footer-content h6 {
+    font-size: 1.15rem;
+    letter-spacing: 0.5px;
+  }
+  .footer-content a {
+    text-decoration: none;
+  }
+  .footer-socials {
+    margin-top: 18px;
+    display: flex;
+    gap: 18px;
+    align-items: center;
+  }
+  .footer-socials a {
+    color: #fff;
+    font-size: 1.6rem;
+    transition: color 0.2s;
+  }
+  .footer-socials a:hover {
+    color: #6366f1;
+  }
+  .carousel-control-custom {
+    background: none;
+    border: none;
+    font-size: 2.5rem;
+    color: #6366f1;
+    font-weight: bold;
+    opacity: 0.85;
+    transition: color 0.2s, opacity 0.2s;
+    z-index: 2;
+  }
+  .carousel-control-custom:hover, .carousel-control-custom:focus {
+    color: #3b82f6;
+    opacity: 1;
+    background: none;
+    outline: none;
+    box-shadow: none;
+  }
+  .carousel-control-prev-custom {
+    left: -40px;
+  }
+  .carousel-control-next-custom {
+    right: -40px;
+  }
+  @media (max-width: 700px) {
+    .carousel-control-prev-custom, .carousel-control-next-custom {
+      left: 0;
+      right: 0;
+    }
+    .hero-fullwidth, .section-centered {
+      margin-bottom: 2.2rem;
+      margin-top: 2.2rem;
+    }
+    .my-5 {
+      margin-top: 2.2rem !important;
+      margin-bottom: 2.2rem !important;
+    }
+    .mb-4 {
+      margin-bottom: 1.2rem !important;
+    }
+    .mt-3 {
+      margin-top: 1.2rem !important;
+    }
+    .footer-fullwidth {
+      margin-top: 2.2rem;
+    }
+    .card.h-100.text-center.shadow,
+    .card.h-100.text-center.shadow.fade-in {
+      padding: 2.2rem 1.2rem 2rem 1.2rem !important;
+      min-height: 260px;
+    }
+    .card.h-100.text-center.shadow .iconify,
+    .card.h-100.text-center.shadow.fade-in .iconify {
+      font-size: 2.5rem !important;
+    }
+    .card.h-100.text-center.shadow .card-title,
+    .card.h-100.text-center.shadow.fade-in .card-title {
+      font-size: 1.25rem !important;
+    }
+    .card.h-100.text-center.shadow .card-text,
+    .card.h-100.text-center.shadow.fade-in .card-text {
+      font-size: 1.08rem !important;
+    }
+    .navbar-brand {
+      font-size: 1.2rem !important;
+    }
+    .hero-fullwidth {
+      padding-top: 60px !important;
+      margin-top: 0 !important;
+    }
+    .main-content {
+      padding-top: 60px !important;
+      margin-top: 0 !important;
+    }
+    .hero-features-mobile {
+      background: rgba(255,255,255,0.10);
+      border-radius: 1.1rem;
+      padding: 1.2rem 1rem 1.2rem 1.2rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 2px 12px rgba(99,102,241,0.10);
+    }
+    .hero-features-mobile span {
+      font-size: 1.08rem;
+      margin-bottom: 0.7rem;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+    .hero-features-mobile .iconify {
+      font-size: 1.5rem !important;
+    }
+    .hero-stats-mobile {
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+      margin-top: 2.2rem;
+    }
+    .hero-stat-card {
+      background: rgba(255,255,255,0.18);
+      border-radius: 1.1rem;
+      padding: 1.1rem 0.7rem;
+      text-align: left;
+      box-shadow: 0 2px 12px rgba(99,102,241,0.10);
+      color: #fff;
+      font-weight: 700;
+      font-size: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .hero-stat-label {
+      font-size: 1rem;
+      font-weight: 400;
+      color: #e0e7ff;
+      margin-top: 0.2rem;
+    }
+    /* Gradient for 'Answer surveys' card on mobile */
+    .how-earn-answer-gradient {
+      background: linear-gradient(90deg, #6366f1 0%, #3b82f6 100%) !important;
+      color: #fff !important;
+      box-shadow: 0 4px 18px rgba(99,102,241,0.13);
+    }
+    .how-earn-answer-gradient .iconify,
+    .how-earn-answer-gradient .card-title,
+    .how-earn-answer-gradient .card-text {
+      color: #fff !important;
+    }
+    /* Gradient for 'Fast Processing' card on mobile */
+    .features-fast-gradient {
+      background: linear-gradient(90deg, #6366f1 0%, #3b82f6 100%) !important;
+      color: #fff !important;
+      box-shadow: 0 4px 18px rgba(99,102,241,0.13);
+    }
+    .features-fast-gradient .iconify,
+    .features-fast-gradient .card-title,
+    .features-fast-gradient .card-text {
+      color: #fff !important;
+    }
+    /* Gradient for 'Easy Navigation' card on mobile */
+    .features-easy-gradient {
+      background: linear-gradient(90deg, #6366f1 0%, #3b82f6 100%) !important;
+      color: #fff !important;
+      box-shadow: 0 4px 18px rgba(99,102,241,0.13);
+    }
+    .features-easy-gradient .iconify,
+    .features-easy-gradient .card-title,
+    .features-easy-gradient .card-text {
+      color: #fff !important;
+    }
+    /* Gradient for 'Contact Information' card on mobile */
+    .contact-info-gradient {
+      background: linear-gradient(90deg, #6366f1 0%, #3b82f6 100%) !important;
+      color: #fff !important;
+      box-shadow: 0 4px 18px rgba(99,102,241,0.13);
+    }
+    .contact-info-gradient .iconify,
+    .contact-info-gradient .fw-bold,
+    .contact-info-gradient .form-label,
+    .contact-info-gradient .mb-3,
+    .contact-info-gradient .ps-4,
+    .contact-info-gradient .text-muted {
+      color: #fff !important;
+    }
+  }
+  .section-centered {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 3.5rem;
+    margin-top: 3.5rem;
+  }
+  .row.g-4 > [class^='col-'], .row.g-4 > [class*=' col-'] {
+    margin-bottom: 2rem;
+  }
+  .card.h-100.text-center.shadow.fade-in,
+  .card.h-100.text-center.shadow {
+    margin-bottom: 2rem;
+    transition: background 0.25s, color 0.25s, box-shadow 0.25s;
+  }
+  .my-5 {
+    margin-top: 3.5rem !important;
+    margin-bottom: 3.5rem !important;
+  }
+  .mb-4 {
+    margin-bottom: 2.2rem !important;
+  }
+  .mb-3 {
+    margin-bottom: 1.5rem !important;
+  }
+  .mt-3 {
+    margin-top: 1.5rem !important;
+  }
+  html, body {
+    overflow-x: hidden;
+  }
+  .btn-gradient {
+    background: linear-gradient(90deg, #6366f1 0%, #3b82f6 100%) !important;
+    color: #fff !important;
+    border: none;
+    font-weight: 600;
+    transition: background 0.2s;
+  }
+  .btn-gradient:hover, .btn-gradient:focus {
+    background: linear-gradient(90deg, #3b82f6 0%, #6366f1 100%) !important;
+    color: #fff !important;
+  }
+</style>
+<!-- Hero Section -->
+<div class="hero-fullwidth">
+  <div class="row align-items-center hero-content">
+    <div class="col-md-7 text-start">
+      <h1 class="display-4 fw-bold fade-in text-start">Earn From Your <span class="hero-highlight">Valuable Opinions</span></h1>
+      <p class="lead fade-in text-start">Get up to <span class="fw-bold text-warning">Ksh 300</span> per survey</p>
+      <div class="hero-features-mobile d-flex flex-column align-items-start gap-2 mb-3 fade-in d-md-none">
+        <span><span class="iconify" data-icon="mdi:check-circle" style="color: #fff;"></span> Free and easy to Join</span>
+        <span><span class="iconify" data-icon="mdi:check-circle" style="color: #fff;"></span> Earn and have fun</span>
+        <span><span class="iconify" data-icon="mdi:check-circle" style="color: #fff;"></span> Quick payouts via M-Pesa</span>
+      </div>
+      <div class="d-flex flex-column align-items-start gap-2 mb-3 fade-in d-none d-md-flex">
+        <span><span class="iconify" data-icon="mdi:check-circle" data-width="20" data-height="20" style="color: #fff;"></span> Free and easy to Join</span>
+        <span><span class="iconify" data-icon="mdi:check-circle" data-width="20" data-height="20" style="color: #fff;"></span> Earn and have fun</span>
+        <span><span class="iconify" data-icon="mdi:check-circle" data-width="20" data-height="20" style="color: #fff;"></span> Quick payouts via M-Pesa</span>
+      </div>
+      {% if not user.is_authenticated %}
+      <a href="/register/" class="btn btn-warning btn-lg px-5 fade-in mb-2 hero-btn-wide text-start">Start Earning Now</a>
+      {% endif %}
+      <div class="d-flex flex-column align-items-start gap-2 mt-3 fade-in">
+        {% if user.is_authenticated %}
+          <a href="/dashboard/" class="btn btn-warning btn-lg hero-btn-wide text-start" style="color:#000;">Go to Dashboard</a>
+        {% endif %}
+        <a href="#learn-more" class="btn btn-light btn-lg hero-btn-wide text-start">Learn More</a>
+      </div>
+    </div>
+    <div class="col-md-5 text-center d-none d-md-block">
+      <!-- Iconify illustration -->
+      <span class="iconify display-1" data-icon="mdi:clipboard-text-outline" data-width="90" data-height="90" style="color:#fff;"></span>
+    </div>
+  </div>
+  <div class="hero-stats-mobile d-md-none">
+    <div class="hero-stat-card">
+      10K+
+      <div class="hero-stat-label">Active Users</div>
+    </div>
+    <div class="hero-stat-card">
+      50K+
+      <div class="hero-stat-label">Surveys Done</div>
+    </div>
+    <div class="hero-stat-card">
+      2M+
+      <div class="hero-stat-label">Paid Out</div>
+</div>
+  </div>
+  <div class="row text-center justify-content-center d-none d-md-flex" style="margin:0; padding:0 0 24px 0; margin-top:90px;">
+  <div class="col-md-4">
+      <h2 class="fw-bold" style="color:#fff;">10K+</h2>
+      <div class="text-light">Active Users</div>
+  </div>
+  <div class="col-md-4">
+      <h2 class="fw-bold" style="color:#fff;">50K+</h2>
+      <div class="text-light">Surveys Done</div>
+  </div>
+  <div class="col-md-4">
+      <h2 class="fw-bold" style="color:#fff;">2M+</h2>
+      <div class="text-light">Paid Out</div>
+    </div>
+  </div>
+</div>
+
+<!-- How it Works -->
+<div id="learn-more" class="my-5 section-centered">
+  <h2 class="text-center mb-4">How to earn money with PennySurveys?</h2>
+  <div class="row g-4 justify-content-center">
+    <div class="col-md-4 text-center">
+      <div class="card h-100 text-center shadow fade-in">
+        <div class="card-body">
+          <span class="iconify display-4 mb-2" data-icon="mdi:account-plus-outline" data-width="60" data-height="60" style="color:#6366f1;"></span>
+          <h5 class="card-title">Sign up for free</h5>
+          <p class="card-text">Registration takes less than 2 minutes and you can start taking surveys right away.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 text-center">
+      <div class="card h-100 text-center shadow fade-in how-earn-answer-gradient">
+        <div class="card-body">
+          <span class="iconify display-4 mb-2" data-icon="mdi:clipboard-edit-outline" data-width="60" data-height="60" style="color:#6366f1;"></span>
+          <h5 class="card-title">Answer surveys</h5>
+          <p class="card-text">Complete surveys from our partners and earn money for each completed survey.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 text-center">
+      <div class="card h-100 text-center shadow fade-in">
+        <div class="card-body">
+          <span class="iconify display-4 mb-2" data-icon="mdi:wallet-outline" data-width="60" data-height="60" style="color:#6366f1;"></span>
+          <h5 class="card-title">Withdraw money</h5>
+          <p class="card-text">Cash out your earnings through M-Pesa, PayPal, or bank transfer when you reach the threshold.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Features -->
+<div class="my-5 section-centered">
+  <h2 class="text-center mb-4">Features</h2>
+  <div class="row g-4 justify-content-center">
+    <div class="col-md-3">
+      <div class="card h-100 text-center shadow features-fast-gradient">
+        <div class="card-body">
+          <span class="iconify display-6 mb-2" data-icon="mdi:timer-outline" data-width="48" data-height="48" style="color:#3b82f6;"></span>
+          <h5 class="card-title">Fast Processing</h5>
+          <p class="card-text">Get payments within 24-48 hours of withdrawal request, no long waiting times.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card h-100 text-center shadow">
+        <div class="card-body">
+          <span class="iconify display-6 mb-2" data-icon="mdi:bell-outline" data-width="48" data-height="48" style="color:#3b82f6;"></span>
+          <h5 class="card-title">Regular updates</h5>
+          <p class="card-text">Get notified when new surveys that match your profile are available.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card h-100 text-center shadow features-easy-gradient">
+        <div class="card-body">
+          <span class="iconify display-6 mb-2" data-icon="mdi:compass-outline" data-width="48" data-height="48" style="color:#3b82f6;"></span>
+          <h5 class="card-title">Easy Navigation</h5>
+          <p class="card-text">User-friendly interface makes it simple to find and complete surveys.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card h-100 text-center shadow">
+        <div class="card-body">
+          <span class="iconify display-6 mb-2" data-icon="mdi:trending-up" data-width="48" data-height="48" style="color:#3b82f6;"></span>
+          <h5 class="card-title">Earn More</h5>
+          <p class="card-text">Refer friends to earn additional income through our referral program.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Testimonials Slider -->
+<div class="my-5">
+  <h2 class="text-center mb-4">What Our Users Say</h2>
+  <div class="card shadow mb-4 mx-auto" style="max-width: 650px; border-radius:1.1rem; background:#f8f9fa; border:none;">
+    <div class="card-body p-4">
+      <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+            <div class="d-flex flex-column align-items-center justify-content-center text-center">
+              <div class="mb-2" style="font-size:2.2rem; color:#ffd700;">
+                <span class="iconify" data-icon="mdi:star" class="me-1"></span>
+                <span class="iconify" data-icon="mdi:star" class="me-1"></span>
+                <span class="iconify" data-icon="mdi:star" class="me-1"></span>
+                <span class="iconify" data-icon="mdi:star" class="me-1"></span>
+                <span class="iconify" data-icon="mdi:star" class="me-1"></span>
+              </div>
+              <blockquote class="blockquote mb-3" style="font-size:1.18rem; font-style:italic; color:#444;">
+                "PennySurveys has become my go-to platform for earning extra money during my studies. The surveys are engaging and the payments are always on time!"
+            </blockquote>
+              <div class="d-flex align-items-center justify-content-center gap-2 mt-2">
+                <span class="iconify" data-icon="mdi:account-circle" style="font-size:2.2rem; color:#6366f1;"></span>
+                <div class="text-start">
+                  <div class="fw-bold" style="font-size:1.08rem;">Sarah Johnson</div>
+                  <div class="text-muted" style="font-size:0.98rem;">Student</div>
+                </div>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-item">
+            <div class="d-flex flex-column align-items-center justify-content-center text-center">
+              <div class="mb-2" style="font-size:2.2rem; color:#ffd700;">
+                <span class="iconify" data-icon="mdi:star" class="me-1"></span>
+                <span class="iconify" data-icon="mdi:star" class="me-1"></span>
+                <span class="iconify" data-icon="mdi:star" class="me-1"></span>
+                <span class="iconify" data-icon="mdi:star" class="me-1"></span>
+                <span class="iconify" data-icon="mdi:star" class="me-1"></span>
+              </div>
+              <blockquote class="blockquote mb-3" style="font-size:1.18rem; font-style:italic; color:#444;">
+                "I love how easy it is to use PennySurveys. The interface is user-friendly and the rewards are real!"
+            </blockquote>
+              <div class="d-flex align-items-center justify-content-center gap-2 mt-2">
+                <span class="iconify" data-icon="mdi:account-circle" style="font-size:2.2rem; color:#6366f1;"></span>
+                <div class="text-start">
+                  <div class="fw-bold" style="font-size:1.08rem;">James Mwangi</div>
+                  <div class="text-muted" style="font-size:0.98rem;">Entrepreneur</div>
+                </div>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-item">
+            <div class="d-flex flex-column align-items-center justify-content-center text-center">
+              <div class="mb-2" style="font-size:2.2rem; color:#ffd700;">
+                <span class="iconify" data-icon="mdi:star" class="me-1"></span>
+                <span class="iconify" data-icon="mdi:star" class="me-1"></span>
+                <span class="iconify" data-icon="mdi:star" class="me-1"></span>
+                <span class="iconify" data-icon="mdi:star" class="me-1"></span>
+                <span class="iconify" data-icon="mdi:star" class="me-1"></span>
+              </div>
+              <blockquote class="blockquote mb-3" style="font-size:1.18rem; font-style:italic; color:#444;">
+                "Quick payouts and interesting surveys! I recommend PennySurveys to anyone looking to earn online."
+            </blockquote>
+              <div class="d-flex align-items-center justify-content-center gap-2 mt-2">
+                <span class="iconify" data-icon="mdi:account-circle" style="font-size:2.2rem; color:#6366f1;"></span>
+                <div class="text-start">
+                  <div class="fw-bold" style="font-size:1.08rem;">Amina Yusuf</div>
+                  <div class="text-muted" style="font-size:0.98rem;">Freelancer</div>
+                </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="carousel-control-prev carousel-control-custom carousel-control-prev-custom" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
+          <span aria-hidden="true" style="font-size:2.2rem; color:#6366f1;">&lt;</span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next carousel-control-custom carousel-control-next-custom" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
+          <span aria-hidden="true" style="font-size:2.2rem; color:#6366f1;">&gt;</span>
+      <span class="visually-hidden">Next</span>
+    </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<div class="my-5">
+  <h2 class="text-center mb-4">Frequently Asked Questions</h2>
+  <div class="card shadow mb-4" style="border-radius:1.1rem; background:#f8f9fa; border:none;">
+    <div class="card-body p-4">
+  <div class="accordion mx-auto" id="faqAccordion" style="max-width:700px;">
+        <div class="accordion-item mb-3" style="border-radius:0.7rem; overflow:hidden; border:none;">
+      <h2 class="accordion-header" id="faq1">
+            <button class="accordion-button d-flex align-items-center gap-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="true" aria-controls="collapse1" style="font-weight:600; font-size:1.08rem;">
+              <span class="iconify" data-icon="mdi:help-circle-outline" style="color:#6366f1; font-size:1.3rem;"></span>
+          How can I become a member?
+        </button>
+      </h2>
+      <div id="collapse1" class="accordion-collapse collapse show" aria-labelledby="faq1" data-bs-parent="#faqAccordion">
+        <div class="accordion-body">
+          Signing up is completely free and easy. Just click the "Get Started" button, fill in your email and create a password. After confirming your email, complete your profile to start receiving relevant surveys. The more detailed your profile, the better we can match you with suitable surveys.
+        </div>
+      </div>
+    </div>
+        <div class="accordion-item mb-3" style="border-radius:0.7rem; overflow:hidden; border:none;">
+      <h2 class="accordion-header" id="faq2">
+            <button class="accordion-button collapsed d-flex align-items-center gap-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2" aria-expanded="false" aria-controls="collapse2" style="font-weight:600; font-size:1.08rem;">
+              <span class="iconify" data-icon="mdi:help-circle-outline" style="color:#6366f1; font-size:1.3rem;"></span>
+          What if I forgot my password?
+        </button>
+      </h2>
+      <div id="collapse2" class="accordion-collapse collapse" aria-labelledby="faq2" data-bs-parent="#faqAccordion">
+        <div class="accordion-body">
+          Click on the "Forgot Password" link on the login page and follow the instructions to reset your password.
+        </div>
+      </div>
+    </div>
+        <div class="accordion-item mb-3" style="border-radius:0.7rem; overflow:hidden; border:none;">
+      <h2 class="accordion-header" id="faq3">
+            <button class="accordion-button collapsed d-flex align-items-center gap-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3" aria-expanded="false" aria-controls="collapse3" style="font-weight:600; font-size:1.08rem;">
+              <span class="iconify" data-icon="mdi:help-circle-outline" style="color:#6366f1; font-size:1.3rem;"></span>
+          Why am I not receiving any survey invitations?
+        </button>
+      </h2>
+      <div id="collapse3" class="accordion-collapse collapse" aria-labelledby="faq3" data-bs-parent="#faqAccordion">
+        <div class="accordion-body">
+          Make sure your profile is complete and up to date. Survey invitations depend on your profile matching available surveys.
+        </div>
+      </div>
+    </div>
+        <div class="accordion-item mb-3" style="border-radius:0.7rem; overflow:hidden; border:none;">
+      <h2 class="accordion-header" id="faq4">
+            <button class="accordion-button collapsed d-flex align-items-center gap-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapse4" aria-expanded="false" aria-controls="collapse4" style="font-weight:600; font-size:1.08rem;">
+              <span class="iconify" data-icon="mdi:help-circle-outline" style="color:#6366f1; font-size:1.3rem;"></span>
+          How can I withdraw my money?
+        </button>
+      </h2>
+      <div id="collapse4" class="accordion-collapse collapse" aria-labelledby="faq4" data-bs-parent="#faqAccordion">
+        <div class="accordion-body">
+          Go to your dashboard, click on "Withdraw", and choose your preferred payment method (M-Pesa, PayPal, or bank transfer).
+        </div>
+      </div>
+    </div>
+        <div class="accordion-item mb-3" style="border-radius:0.7rem; overflow:hidden; border:none;">
+      <h2 class="accordion-header" id="faq5">
+            <button class="accordion-button collapsed d-flex align-items-center gap-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapse5" aria-expanded="false" aria-controls="collapse5" style="font-weight:600; font-size:1.08rem;">
+              <span class="iconify" data-icon="mdi:help-circle-outline" style="color:#6366f1; font-size:1.3rem;"></span>
+          Why am I not qualified for a survey?
+        </button>
+      </h2>
+      <div id="collapse5" class="accordion-collapse collapse" aria-labelledby="faq5" data-bs-parent="#faqAccordion">
+        <div class="accordion-body">
+          Surveys have specific requirements. If you do not meet the criteria, you may not qualify for certain surveys.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Contact Section -->
+<div class="my-5">
+  <h2 class="text-center mb-4">Get in Touch</h2>
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow mb-4 contact-info-gradient">
+        <div class="card-body">
+          <h5 class="mb-3">Contact Information</h5>
+          <div class="d-flex flex-column gap-3">
+            <div>
+              <div class="d-flex align-items-center mb-1">
+                <span class="iconify me-2" data-icon="mdi:email-outline" style="color:#6366f1; font-size:1.4rem;"></span>
+                <span class="fw-bold">Email</span>
+              </div>
+              <div class="ps-4 text-muted" style="font-size:1.08rem;">support@pennysurveys.com</div>
+            </div>
+            <div>
+              <div class="d-flex align-items-center mb-1">
+                <span class="iconify me-2" data-icon="mdi:phone-outline" style="color:#22c55e; font-size:1.4rem;"></span>
+                <span class="fw-bold">Phone</span>
+              </div>
+              <div class="ps-4 text-muted" style="font-size:1.08rem;">+254 700 123 456</div>
+            </div>
+            <div>
+              <div class="d-flex align-items-center mb-1">
+                <span class="iconify me-2" data-icon="mdi:map-marker-outline" style="color:#fd7e14; font-size:1.4rem;"></span>
+                <span class="fw-bold">Address</span>
+              </div>
+              <div class="ps-4 text-muted" style="font-size:1.08rem;">Nairobi, Kenya</div>
+            </div>
+            <div>
+              <div class="d-flex align-items-center mb-1">
+                <span class="iconify me-2" data-icon="mdi:chat-outline" style="color:#3b82f6; font-size:1.4rem;"></span>
+                <span class="fw-bold">Live Chat</span>
+              </div>
+              <div class="ps-4 text-muted" style="font-size:1.08rem;">Available</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <form>
+        <div class="card shadow mb-4">
+          <div class="card-body">
+        <div class="mb-3">
+          <label for="name" class="form-label">Full Name</label>
+          <input type="text" class="form-control" id="name" placeholder="John Doe">
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="email" placeholder="john@example.com">
+        </div>
+        <div class="mb-3">
+          <label for="subject" class="form-label">Subject</label>
+          <input type="text" class="form-control" id="subject" placeholder="How can we help you?">
+        </div>
+        <div class="mb-3">
+          <label for="message" class="form-label">Message</label>
+          <textarea class="form-control" id="message" rows="3" placeholder="Your message here..."></textarea>
+        </div>
+            <button type="submit" class="btn btn-gradient w-100"><span class="iconify me-1" data-icon="mdi:send"></span>Send Message</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer-fullwidth rounded-0">
+  <div class="footer-content">
+    <div class="footer-col mb-3">
+      <h5>PennySurveys</h5>
+      <p>Earn money by participating in interesting surveys from our partners. Fast payments, user-friendly platform.</p>
+      <div class="footer-socials">
+        <a href="#" title="Facebook"><span class="iconify" data-icon="mdi:facebook" data-width="28" data-height="28"></span></a>
+        <a href="#" title="Twitter"><span class="iconify" data-icon="mdi:twitter" data-width="28" data-height="28"></span></a>
+        <a href="#" title="Instagram"><span class="iconify" data-icon="mdi:instagram" data-width="28" data-height="28"></span></a>
+        <a href="#" title="LinkedIn"><span class="iconify" data-icon="mdi:linkedin" data-width="28" data-height="28"></span></a>
+      </div>
+    </div>
+    <div class="footer-col mb-3">
+      <h6>Quick Links</h6>
+      <ul class="list-unstyled">
+        <li><a href="#" class="text-light">Home</a></li>
+        <li><a href="#" class="text-light">About Us</a></li>
+        <li><a href="#" class="text-light">Surveys</a></li>
+        <li><a href="#" class="text-light">Dashboard</a></li>
+        <li><a href="#" class="text-light">Referrals</a></li>
+      </ul>
+    </div>
+    <div class="footer-col mb-3">
+      <h6>Support</h6>
+      <ul class="list-unstyled">
+        <li><a href="#faqAccordion" class="text-light">FAQ</a></li>
+        <li><a href="#" class="text-light">Privacy Policy</a></li>
+        <li><a href="#" class="text-light">Terms of Service</a></li>
+        <li><a href="#" class="text-light">Contact Us</a></li>
+      </ul>
+    </div>
+    <div class="footer-col mb-3">
+      <h6>Newsletter</h6>
+      <form class="d-flex">
+        <input type="email" class="form-control me-2" placeholder="Your email">
+        <button class="btn btn-warning" type="submit">Subscribe</button>
+      </form>
+    </div>
+  </div>
+  <div class="text-center text-muted mt-4">© 2025 PennySurveys. All rights reserved.</div>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+{% endblock %} 

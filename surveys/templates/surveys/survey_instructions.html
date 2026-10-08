@@ -1,0 +1,189 @@
+{% extends 'surveys/base.html' %}
+{% block title %}{{ survey_title }} - Instructions | PennySurveys{% endblock %}
+{% block show_sidebar %}1{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<script src="https://code.iconify.design/3/3.1.1/iconify.min.js"></script>
+<style>
+  .instructions-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+  }
+  .instructions-card {
+    background: #fff;
+    border-radius: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    padding: 2rem;
+    border: none;
+  }
+  .survey-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #f0f0f0;
+  }
+  .survey-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 0.5rem;
+  }
+  .instructions-box {
+    background: #e3f2fd;
+    border: 1px solid #bbdefb;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  .instructions-title {
+    color: #1976d2;
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .instruction-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    margin-bottom: 0.8rem;
+    color: #1976d2;
+    font-weight: 500;
+  }
+  .instruction-item:last-child {
+    margin-bottom: 0;
+  }
+  .check-icon {
+    color: #4caf50;
+    font-size: 1.2rem;
+    margin-top: 0.1rem;
+  }
+  .survey-details {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  .detail-item {
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 0.8rem;
+    border: 1px solid #e9ecef;
+  }
+  .detail-label {
+    color: #6c757d;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  .detail-value {
+    color: #333;
+    font-size: 1.3rem;
+    font-weight: 700;
+  }
+  .start-btn {
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    color: white;
+    border: none;
+    padding: 1rem 3rem;
+    border-radius: 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0 auto;
+  }
+  .start-btn:hover {
+    background: linear-gradient(135deg, #5b5fd8 0%, #7c3aed 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+    color: white;
+  }
+  .back-link {
+    text-align: center;
+    margin-top: 1rem;
+  }
+  .back-link a {
+    color: #6c757d;
+    text-decoration: none;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+  .back-link a:hover {
+    color: #6366f1;
+  }
+</style>
+
+<div class="instructions-container">
+  <div class="instructions-card">
+    <div class="survey-header">
+      <div class="survey-title">{{ survey_title }}</div>
+    </div>
+
+    <div class="instructions-box">
+      <div class="instructions-title">
+        <span class="iconify" data-icon="mdi:information-outline"></span>
+        Important Instructions
+      </div>
+      <div class="instruction-item">
+        <span class="iconify check-icon" data-icon="mdi:check-circle"></span>
+        <span>Please do not leave or refresh the page until you complete the survey</span>
+      </div>
+      <div class="instruction-item">
+        <span class="iconify check-icon" data-icon="mdi:check-circle"></span>
+        <span>Take your time to read each question carefully</span>
+      </div>
+      <div class="instruction-item">
+        <span class="iconify check-icon" data-icon="mdi:check-circle"></span>
+        <span>You must wait 4 seconds before proceeding to the next question</span>
+      </div>
+      <div class="instruction-item">
+        <span class="iconify check-icon" data-icon="mdi:check-circle"></span>
+        <span>Answer honestly and to the best of your knowledge</span>
+      </div>
+    </div>
+
+    <div class="survey-details">
+      <div class="detail-item">
+        <div class="detail-label">Reward Amount</div>
+        <div class="detail-value">Ksh {{ survey_reward }}</div>
+      </div>
+      <div class="detail-item">
+        <div class="detail-label">Estimated Time</div>
+        <div class="detail-value">{{ survey_time }} mins</div>
+      </div>
+      <div class="detail-item">
+        <div class="detail-label">Questions</div>
+        <div class="detail-value">{{ survey_questions }}</div>
+      </div>
+    </div>
+
+    <form method="post" action="{% url 'take_survey' survey_title %}">
+      {% csrf_token %}
+      <input type="hidden" name="start_survey" value="1">
+      <button type="submit" class="start-btn">
+        Start Survey
+        <span class="iconify" data-icon="mdi:arrow-right"></span>
+      </button>
+    </form>
+
+    <div class="back-link">
+      <a href="{% url 'surveys_list' %}">
+        <span class="iconify" data-icon="mdi:arrow-left"></span>
+        Back to Surveys
+      </a>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+{% endblock %} 

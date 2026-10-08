@@ -1,0 +1,206 @@
+{% extends 'surveys/base.html' %}
+{% block title %}Complete Your Payment | PennySurveys{% endblock %}
+{% block show_sidebar %}1{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<script src="https://code.iconify.design/3/3.1.1/iconify.min.js"></script>
+<style>
+  .payment-header {
+    background: linear-gradient(90deg, #fd7e14 0%, #ff9800 100%);
+    border-radius: 1.3rem 1.3rem 0 0;
+    padding: 2rem 1.5rem 1.2rem 1.5rem;
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin-bottom: 0;
+  }
+  .payment-header-sub {
+    color: #f3f4fa;
+    font-size: 1.08rem;
+    font-weight: 400;
+    margin-top: 0.7rem;
+    margin-bottom: 1.2rem;
+  }
+  .payment-box {
+    background: #fff;
+    border-radius: 0 0 1.3rem 1.3rem;
+    box-shadow: 0 2px 8px rgba(60,72,120,0.07);
+    padding: 0 1.5rem 2rem 1.5rem;
+    margin-bottom: 2rem;
+  }
+  .payment-plan-box {
+    background: #f6f7ff;
+    border-radius: 0.8rem;
+    padding: 1.3rem 1.5rem;
+    margin-top: 1.2rem;
+    margin-bottom: 2.2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(60,72,120,0.03);
+    gap: 2.5rem;
+  }
+  .payment-plan-label {
+    color: #6366f1;
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 0.2rem;
+  }
+  .payment-plan-amount {
+    color: #6366f1;
+    font-size: 1.15rem;
+    font-weight: 700;
+  }
+  .payment-instructions {
+    margin-bottom: 1.5rem;
+  }
+  .payment-instructions-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #222;
+  }
+  .payment-step {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+  }
+  .payment-step-number {
+    background: #f6f7ff;
+    color: #6366f1;
+    font-weight: 700;
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    margin-right: 1rem;
+  }
+  .payment-step-content {
+    font-size: 1.08rem;
+    color: #222;
+  }
+  .payment-till-box {
+    background: #f8f9fa;
+    border-radius: 0.6rem;
+    padding: 0.7rem 1rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #6366f1;
+    margin: 0.5rem 0 1rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .payment-till-copy {
+    color: #6366f1;
+    font-size: 1.1rem;
+    cursor: pointer;
+    margin-left: 1rem;
+    font-weight: 600;
+    border: none;
+    background: none;
+    padding: 0;
+  }
+  .payment-confirm-btn {
+    background: #fd7e14;
+    color: #fff;
+    border: none;
+    border-radius: 0.7rem;
+    font-weight: 600;
+    padding: 0.9rem 0;
+    font-size: 1.1rem;
+    width: 100%;
+    margin-top: 1.5rem;
+    transition: background 0.2s;
+  }
+  .payment-confirm-btn:hover, .payment-confirm-btn:focus {
+    background: #ff9800;
+    color: #fff;
+  }
+  .container.my-4 {
+    margin-top: 2.5rem !important;
+  }
+</style>
+<div class="container my-4 px-2 px-md-4" style="max-width: 700px;">
+  <div class="payment-header">
+    Complete Your Payment
+    <div class="payment-header-sub">Follow the steps below to activate your subscription</div>
+  </div>
+  <div class="payment-box">
+    <form method="post" autocomplete="off" {% if error_message %}data-has-error="true"{% endif %}>
+      {% csrf_token %}
+      {% if survey_title %}
+      <input type="hidden" name="survey_title" value="{{ survey_title }}">
+      {% endif %}
+      <input type="hidden" name="plan" value="{{ plan }}">
+      <input type="hidden" name="amount" value="{{ amount }}">
+      <div class="payment-plan-box mb-4">
+        <div>
+          <div class="payment-plan-label">Selected Plan</div>
+          <div class="fw-bold">{{ plan }}</div>
+        </div>
+        <div>
+          <div class="payment-plan-label">Amount</div>
+          <div class="payment-plan-amount">Ksh {{ amount }}</div>
+        </div>
+      </div>
+      <div class="payment-instructions">
+        <div class="payment-instructions-title">Payment Instructions</div>
+        <div class="payment-step"><div class="payment-step-number">1</div><div class="payment-step-content">Go to your M-PESA menu</div></div>
+        <div class="payment-step"><div class="payment-step-number">2</div><div class="payment-step-content">Select "Lipa na M-PESA"</div></div>
+        <div class="payment-step"><div class="payment-step-number">3</div><div class="payment-step-content">Select "Buy Goods and Services"</div></div>
+        <div class="payment-step"><div class="payment-step-number">4</div><div class="payment-step-content">Enter Till Number:</div></div>
+        <div class="payment-till-box">
+          {{ till_number }}
+          <button class="payment-till-copy" onclick="navigator.clipboard.writeText('{{ till_number }}');return false;">Copy</button>
+        </div>
+        <div class="payment-step"><div class="payment-step-number">5</div><div class="payment-step-content">Enter amount: <b>Ksh {{ amount }}</b></div></div>
+        <div class="payment-step"><div class="payment-step-number">6</div><div class="payment-step-content">Enter your M-PESA PIN and confirm payment</div></div>
+        <div class="payment-step">
+          <div class="payment-step-number">7</div>
+          <div class="payment-step-content">
+            Enter the M-PESA message you received after payment
+            <div class="mt-2" style="max-width:350px;">
+              <input type="text" class="form-control" name="mpesa_message" placeholder="Enter M-PESA message" autocomplete="off" required value="{{ mpesa_message|default:'' }}">
+              {% if error_message %}
+                <div class="alert alert-danger mt-2" style="font-size: 0.9rem; padding: 0.5rem 0.75rem;">
+                  {{ error_message }}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="payment-confirm-btn"><span class="iconify" data-icon="mdi:cellphone-check-outline"></span> I've Made the Payment</button>
+    </form>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // Prevent page scroll to top on form submission
+  document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form');
+    const mpesaInput = document.querySelector('input[name="mpesa_message"]');
+    
+    form.addEventListener('submit', function(e) {
+      // Store the current scroll position
+      const scrollPosition = window.scrollY;
+      
+      // After form submission, restore scroll position
+      setTimeout(function() {
+        window.scrollTo(0, scrollPosition);
+      }, 100);
+    });
+    
+    // If there's an error message, scroll to the input field
+    if (form.dataset.hasError === 'true') {
+      setTimeout(function() {
+        mpesaInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 200);
+    }
+  });
+</script>
+{% endblock %} 
