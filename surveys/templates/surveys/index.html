@@ -21,6 +21,9 @@
     margin-top: 0;
     margin-bottom: 3.5rem;
   }
+  .main-content {
+    padding-top: 0;
+  }
   .hero-content {
     max-width: 1200px;
     margin: 0 auto;
@@ -99,36 +102,99 @@
     color: #6366f1;
   }
   .carousel-control-custom {
-    background: none;
-    border: none;
-    font-size: 2.5rem;
-    color: #6366f1;
-    font-weight: bold;
-    opacity: 0.85;
-    transition: color 0.2s, opacity 0.2s;
-    z-index: 2;
+    width: 40px;
+    height: 40px;
+    flex: 0 0 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    color: #24583a;
+    background: #fff;
+    border: 1px solid #d9e2dc;
+    border-radius: 50%;
+    transition: color 0.2s, background 0.2s, border-color 0.2s;
   }
   .carousel-control-custom:hover, .carousel-control-custom:focus {
-    color: #3b82f6;
+    color: #fff;
+    background: #24583a;
+    border-color: #24583a;
+  }
+  .testimonial-section .testimonial-card {
+    width: min(100% - 2rem, 760px);
+    border: 1px solid #e2e8e4;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 12px 32px rgba(36, 88, 58, 0.08) !important;
+  }
+  .testimonial-card .card-body {
+    padding: 1.75rem !important;
+  }
+  .testimonial-carousel .carousel-inner {
+    min-height: 220px;
+  }
+  .testimonial-stars {
+    display: flex;
+    gap: 0.2rem;
+    margin-bottom: 0.9rem;
+    color: #bc8425;
+    font-size: 1.45rem;
+  }
+  .testimonial-quote {
+    max-width: 38rem;
+    margin: 0 auto 1rem;
+    color: #34423a;
+    font-size: 1.12rem;
+    font-style: normal;
+    line-height: 1.65;
+  }
+  .testimonial-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  #testimonialCarousel .carousel-indicators {
+    position: static;
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin: 0;
+  }
+  #testimonialCarousel .carousel-indicators [data-bs-target] {
+    box-sizing: border-box;
+    width: 8px;
+    height: 8px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: #b8c4bc;
     opacity: 1;
-    background: none;
-    outline: none;
-    box-shadow: none;
   }
-  .carousel-control-prev-custom {
-    left: -40px;
+  #testimonialCarousel .carousel-indicators .active {
+    background: #24583a;
   }
-  .carousel-control-next-custom {
-    right: -40px;
+  .testimonial-controls .iconify {
+    font-size: 1.25rem;
   }
   @media (max-width: 700px) {
-    .carousel-control-prev-custom, .carousel-control-next-custom {
-      left: 0;
-      right: 0;
+    .testimonial-card .card-body {
+      padding: 1.25rem !important;
+    }
+    .testimonial-carousel .carousel-inner {
+      min-height: 250px;
+    }
+    .testimonial-quote {
+      font-size: 1.05rem;
     }
     .hero-fullwidth, .section-centered {
       margin-bottom: 2.2rem;
-      margin-top: 2.2rem;
+      margin-top: 0;
+    }
+    .main-content {
+      padding-top: 56px !important;
     }
     .my-5 {
       margin-top: 2.2rem !important;
@@ -168,7 +234,7 @@
       margin-top: 0 !important;
     }
     .main-content {
-      padding-top: 60px !important;
+      padding-top: 56px !important;
       margin-top: 0 !important;
     }
     .hero-features-mobile {
@@ -443,27 +509,22 @@
 </div>
 
 <!-- Testimonials Slider -->
-<div class="my-5">
+<div class="my-5 testimonial-section">
   <h2 class="text-center mb-4">What Our Users Say</h2>
-  <div class="card shadow mb-4 mx-auto" style="max-width: 650px; border-radius:1.1rem; background:#f8f9fa; border:none;">
+  <div class="card shadow mb-4 mx-auto testimonial-card">
     <div class="card-body p-4">
-      <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-indicators">
-      <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-      <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-      <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-    </div>
+      <div id="testimonialCarousel" class="carousel slide testimonial-carousel">
     <div class="carousel-inner">
       <div class="carousel-item active">
             <div class="d-flex flex-column align-items-center justify-content-center text-center">
-              <div class="mb-2" style="font-size:2.2rem; color:#ffd700;">
-                <span class="iconify" data-icon="mdi:star" class="me-1"></span>
-                <span class="iconify" data-icon="mdi:star" class="me-1"></span>
-                <span class="iconify" data-icon="mdi:star" class="me-1"></span>
-                <span class="iconify" data-icon="mdi:star" class="me-1"></span>
-                <span class="iconify" data-icon="mdi:star" class="me-1"></span>
+              <div class="testimonial-stars" aria-label="5 out of 5 stars">
+                <span class="iconify" data-icon="mdi:star"></span>
+                <span class="iconify" data-icon="mdi:star"></span>
+                <span class="iconify" data-icon="mdi:star"></span>
+                <span class="iconify" data-icon="mdi:star"></span>
+                <span class="iconify" data-icon="mdi:star"></span>
               </div>
-              <blockquote class="blockquote mb-3" style="font-size:1.18rem; font-style:italic; color:#444;">
+              <blockquote class="blockquote testimonial-quote">
                 "PennySurveys has become my go-to platform for earning extra money during my studies. The surveys are engaging and the payments are always on time!"
             </blockquote>
               <div class="d-flex align-items-center justify-content-center gap-2 mt-2">
@@ -477,14 +538,14 @@
       </div>
       <div class="carousel-item">
             <div class="d-flex flex-column align-items-center justify-content-center text-center">
-              <div class="mb-2" style="font-size:2.2rem; color:#ffd700;">
-                <span class="iconify" data-icon="mdi:star" class="me-1"></span>
-                <span class="iconify" data-icon="mdi:star" class="me-1"></span>
-                <span class="iconify" data-icon="mdi:star" class="me-1"></span>
-                <span class="iconify" data-icon="mdi:star" class="me-1"></span>
-                <span class="iconify" data-icon="mdi:star" class="me-1"></span>
+              <div class="testimonial-stars" aria-label="5 out of 5 stars">
+                <span class="iconify" data-icon="mdi:star"></span>
+                <span class="iconify" data-icon="mdi:star"></span>
+                <span class="iconify" data-icon="mdi:star"></span>
+                <span class="iconify" data-icon="mdi:star"></span>
+                <span class="iconify" data-icon="mdi:star"></span>
               </div>
-              <blockquote class="blockquote mb-3" style="font-size:1.18rem; font-style:italic; color:#444;">
+              <blockquote class="blockquote testimonial-quote">
                 "I love how easy it is to use PennySurveys. The interface is user-friendly and the rewards are real!"
             </blockquote>
               <div class="d-flex align-items-center justify-content-center gap-2 mt-2">
@@ -498,14 +559,14 @@
       </div>
       <div class="carousel-item">
             <div class="d-flex flex-column align-items-center justify-content-center text-center">
-              <div class="mb-2" style="font-size:2.2rem; color:#ffd700;">
-                <span class="iconify" data-icon="mdi:star" class="me-1"></span>
-                <span class="iconify" data-icon="mdi:star" class="me-1"></span>
-                <span class="iconify" data-icon="mdi:star" class="me-1"></span>
-                <span class="iconify" data-icon="mdi:star" class="me-1"></span>
-                <span class="iconify" data-icon="mdi:star" class="me-1"></span>
+              <div class="testimonial-stars" aria-label="5 out of 5 stars">
+                <span class="iconify" data-icon="mdi:star"></span>
+                <span class="iconify" data-icon="mdi:star"></span>
+                <span class="iconify" data-icon="mdi:star"></span>
+                <span class="iconify" data-icon="mdi:star"></span>
+                <span class="iconify" data-icon="mdi:star"></span>
               </div>
-              <blockquote class="blockquote mb-3" style="font-size:1.18rem; font-style:italic; color:#444;">
+              <blockquote class="blockquote testimonial-quote">
                 "Quick payouts and interesting surveys! I recommend PennySurveys to anyone looking to earn online."
             </blockquote>
               <div class="d-flex align-items-center justify-content-center gap-2 mt-2">
@@ -518,14 +579,19 @@
         </div>
       </div>
     </div>
-    <button class="carousel-control-prev carousel-control-custom carousel-control-prev-custom" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
-          <span aria-hidden="true" style="font-size:2.2rem; color:#6366f1;">&lt;</span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next carousel-control-custom carousel-control-next-custom" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
-          <span aria-hidden="true" style="font-size:2.2rem; color:#6366f1;">&gt;</span>
-      <span class="visually-hidden">Next</span>
-    </button>
+    <div class="testimonial-controls">
+      <button class="carousel-control-custom" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev" aria-label="Previous testimonial" title="Previous testimonial">
+        <span class="iconify" data-icon="mdi:chevron-left" aria-hidden="true"></span>
+      </button>
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+      </div>
+      <button class="carousel-control-custom" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next" aria-label="Next testimonial" title="Next testimonial">
+        <span class="iconify" data-icon="mdi:chevron-right" aria-hidden="true"></span>
+      </button>
+    </div>
       </div>
     </div>
   </div>
