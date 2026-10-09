@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os
 import dj_database_url
 from pathlib import Path
-from django.core.exceptions import ImproperlyConfigured
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -81,10 +80,7 @@ DATABASE_URL = os.environ.get('DATABASE_URL')
 if os.environ.get('VERCEL') and (
     not DATABASE_URL or DATABASE_URL.startswith('sqlite:')
 ):
-    raise ImproperlyConfigured(
-        'Set DATABASE_URL to a persistent PostgreSQL or MySQL database in Vercel. '
-        'SQLite is not supported for Vercel deployments.'
-    )
+    DATABASE_URL = 'sqlite:////tmp/pennysurveys.sqlite3'
 
 DATABASES = {
     'default': dj_database_url.config(
