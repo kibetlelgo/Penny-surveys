@@ -82,7 +82,7 @@ if os.environ.get('VERCEL') and (
     not DATABASE_URL or DATABASE_URL.startswith('sqlite:')
 ):
     raise ImproperlyConfigured(
-        'Set DATABASE_URL to a persistent PostgreSQL database in Vercel. '
+        'Set DATABASE_URL to a persistent PostgreSQL or MySQL database in Vercel. '
         'SQLite is not supported for Vercel deployments.'
     )
 

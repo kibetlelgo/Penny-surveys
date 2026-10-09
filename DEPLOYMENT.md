@@ -4,9 +4,9 @@ This guide will help you deploy your PennySurveys Django application to Truehost
 
 ## Deploying to Vercel
 
-Vercel's serverless filesystem is not a persistent place to store SQLite data. Use a hosted PostgreSQL database (for example, a PostgreSQL provider integrated with Vercel) instead.
+Vercel's serverless filesystem is not a persistent place to store SQLite data. Use a hosted PostgreSQL or MySQL database instead. Both are supported through `DATABASE_URL`.
 
-1. Create a PostgreSQL database and copy its connection URL. The URL should use the `postgres://` or `postgresql://` scheme; include `?sslmode=require` if required by your provider.
+1. Create a PostgreSQL or MySQL database and copy its connection URL. PostgreSQL URLs use the `postgres://` or `postgresql://` scheme; MySQL URLs use `mysql://`. Follow your provider's instructions for SSL and URL-encoding special characters in credentials.
 2. In the Vercel project, add `DATABASE_URL` with that connection URL under **Settings > Environment Variables**. Add it to every environment where the app runs, then redeploy.
 3. Set `SECRET_KEY` to a secure generated value, `DEBUG` to `False`, and `ALLOWED_HOSTS` to `penny-surveys.vercel.app` (plus any custom domains).
 4. Run database migrations against that same database before serving registration requests:
