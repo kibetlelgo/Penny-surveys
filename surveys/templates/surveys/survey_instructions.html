@@ -2,7 +2,6 @@
 {% block title %}{{ survey_title }} - Instructions | PennySurveys{% endblock %}
 {% block show_sidebar %}1{% endblock %}
 {% block content %}
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 <script src="https://code.iconify.design/3/3.1.1/iconify.min.js"></script>
 <style>
   .instructions-container {
@@ -11,33 +10,34 @@
     padding: 2rem 1rem;
   }
   .instructions-card {
-    background: #fff;
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.96), rgba(17, 24, 39, 0.9));
     border-radius: 1.5rem;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    box-shadow: 0 18px 40px rgba(0,0,0,0.25);
     padding: 2rem;
-    border: none;
+    border: 1px solid var(--luxury-border);
+    color: var(--luxury-text);
   }
   .survey-header {
     text-align: center;
     margin-bottom: 2rem;
     padding-bottom: 1rem;
-    border-bottom: 2px solid #f0f0f0;
+    border-bottom: 1px solid var(--luxury-border);
   }
   .survey-title {
     font-size: 2.2rem;
     font-weight: 700;
-    color: #333;
+    color: var(--luxury-text);
     margin-bottom: 0.5rem;
   }
   .instructions-box {
-    background: #e3f2fd;
-    border: 1px solid #bbdefb;
+    background: rgba(217, 175, 95, 0.1);
+    border: 1px solid var(--luxury-border);
     border-radius: 1rem;
     padding: 1.5rem;
     margin-bottom: 2rem;
   }
   .instructions-title {
-    color: #1976d2;
+    color: var(--luxury-gold-soft);
     font-weight: 700;
     font-size: 1.2rem;
     margin-bottom: 1rem;
@@ -50,14 +50,14 @@
     align-items: flex-start;
     gap: 0.8rem;
     margin-bottom: 0.8rem;
-    color: #1976d2;
+    color: var(--luxury-muted);
     font-weight: 500;
   }
   .instruction-item:last-child {
     margin-bottom: 0;
   }
   .check-icon {
-    color: #4caf50;
+    color: #4ade80;
     font-size: 1.2rem;
     margin-top: 0.1rem;
   }
@@ -70,24 +70,24 @@
   }
   .detail-item {
     padding: 1rem;
-    background: #f8f9fa;
+    background: rgba(15, 23, 42, 0.82);
     border-radius: 0.8rem;
-    border: 1px solid #e9ecef;
+    border: 1px solid rgba(217, 175, 95, 0.16);
   }
   .detail-label {
-    color: #6c757d;
+    color: var(--luxury-muted);
     font-size: 0.9rem;
     font-weight: 600;
     margin-bottom: 0.5rem;
   }
   .detail-value {
-    color: #333;
+    color: var(--luxury-text);
     font-size: 1.3rem;
     font-weight: 700;
   }
   .start-btn {
-    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-    color: white;
+    background: #d9af5f;
+    color: #111827;
     border: none;
     padding: 1rem 3rem;
     border-radius: 1rem;
@@ -101,17 +101,17 @@
     margin: 0 auto;
   }
   .start-btn:hover {
-    background: linear-gradient(135deg, #5b5fd8 0%, #7c3aed 100%);
+    background: #f3d79c;
     transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
-    color: white;
+    box-shadow: 0 4px 15px rgba(217, 175, 95, 0.22);
+    color: #111827;
   }
   .back-link {
     text-align: center;
     margin-top: 1rem;
   }
   .back-link a {
-    color: #6c757d;
+    color: var(--luxury-muted);
     text-decoration: none;
     font-weight: 500;
     display: inline-flex;
@@ -119,7 +119,7 @@
     gap: 0.3rem;
   }
   .back-link a:hover {
-    color: #6366f1;
+    color: var(--luxury-gold-soft);
   }
 </style>
 

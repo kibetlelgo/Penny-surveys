@@ -3,6 +3,14 @@
 {% block title %}Index | PennySurveys{% endblock %}
 {% block content %}
 <style>
+  body {
+    background:
+      radial-gradient(circle at top left, rgba(217, 175, 95, 0.14), transparent 24%),
+      radial-gradient(circle at bottom right, rgba(37, 99, 235, 0.16), transparent 28%),
+      linear-gradient(180deg, #0c1017 0%, #121827 26%, #0f172a 100%);
+    color: #e5e7eb;
+  }
+
   .fade-in {
     opacity: 0;
     animation: fadeIn 1.5s ease-in forwards;
@@ -10,16 +18,110 @@
   @keyframes fadeIn {
     to { opacity: 1; }
   }
+  a, .btn, .card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+  }
+  .btn:hover, .card:hover {
+    transform: translateY(-2px);
+  }
   .hero-fullwidth {
     width: 100vw;
     margin-left: 50%;
     transform: translateX(-50%);
-    background: linear-gradient(90deg, #6366f1 0%, #3b82f6 100%);
+    background:
+      radial-gradient(circle at top right, rgba(217, 175, 95, 0.18), transparent 30%),
+      linear-gradient(135deg, #0b0f1a 0%, #111827 30%, #1a1b2d 62%, #0f172a 100%);
     color: #fff;
-    border-radius: 0;
+    border-radius: 0 0 2.2rem 2.2rem;
     padding: 0;
     margin-top: 0;
     margin-bottom: 3.5rem;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.32);
+    border-bottom: 1px solid rgba(217, 175, 95, 0.16);
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1rem;
+    border-radius: 999px;
+    background: rgba(217, 175, 95, 0.10);
+    border: 1px solid rgba(217, 175, 95, 0.28);
+    color: #f6e7bc;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    margin-bottom: 1.2rem;
+  }
+  .hero-panel {
+    background: rgba(15, 23, 42, 0.46);
+    border: 1px solid rgba(217, 175, 95, 0.22);
+    border-radius: 1.7rem;
+    padding: 1.25rem;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.22);
+  }
+  .hero-panel-card {
+    background: rgba(9, 13, 22, 0.56);
+    border: 1px solid rgba(217, 175, 95, 0.15);
+    border-radius: 1.2rem;
+    padding: 1rem;
+    text-align: left;
+  }
+  .hero-panel-card + .hero-panel-card {
+    margin-top: 0.8rem;
+  }
+  .hero-panel-header {
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.72);
+    margin-bottom: 0.8rem;
+  }
+  .survey-pill {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.8rem 0.9rem;
+    border-radius: 0.9rem;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .survey-pill strong {
+    font-size: 1rem;
+  }
+  .survey-pill span {
+    color: #dfe7ff;
+    font-size: 0.92rem;
+  }
+  .survey-pill .reward {
+    color: #fef3c7;
+    font-weight: 700;
+  }
+  .hero-stats-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: 1.5rem;
+  }
+  .stat-pill {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 110px;
+    padding: 0.7rem 0.9rem;
+    border-radius: 1rem;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(217, 175, 95, 0.18);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+  }
+  .stat-pill strong {
+    font-size: 1.15rem;
+    line-height: 1.1;
+  }
+  .stat-pill span {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.75);
   }
   .main-content {
     padding-top: 0;
@@ -32,13 +134,16 @@
   }
   .hero-highlight {
     color: #fff;
-    text-shadow: 0 2px 8px rgba(99,102,241,0.25), 0 1px 0 #3b82f6;
+    text-shadow: 0 2px 8px rgba(99,102,241,0.25), 0 1px 0 rgba(255,255,255,0.16);
     font-weight: 900;
   }
   .hero-btn-wide {
     min-width: 220px;
     width: 100%;
     max-width: 320px;
+    font-weight: 700;
+    border-radius: 999px;
+    box-shadow: 0 12px 25px rgba(15, 23, 42, 0.18);
   }
   @media (max-width: 600px) {
     .hero-btn-wide {
@@ -109,23 +214,24 @@
     align-items: center;
     justify-content: center;
     padding: 0;
-    color: #24583a;
-    background: #fff;
-    border: 1px solid #d9e2dc;
+    color: #f3d79c;
+    background: rgba(15, 23, 42, 0.92);
+    border: 1px solid rgba(217, 175, 95, 0.32);
     border-radius: 50%;
     transition: color 0.2s, background 0.2s, border-color 0.2s;
   }
   .carousel-control-custom:hover, .carousel-control-custom:focus {
-    color: #fff;
-    background: #24583a;
-    border-color: #24583a;
+    color: #111827;
+    background: #d9af5f;
+    border-color: #d9af5f;
   }
   .testimonial-section .testimonial-card {
     width: min(100% - 2rem, 760px);
-    border: 1px solid #e2e8e4;
-    border-radius: 8px;
-    background: #fff;
-    box-shadow: 0 12px 32px rgba(36, 88, 58, 0.08) !important;
+    border: 1px solid rgba(217, 175, 95, 0.22);
+    border-radius: 1rem;
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.96), rgba(17, 24, 39, 0.9));
+    color: #f3f4f6;
+    box-shadow: 0 20px 50px rgba(3, 7, 18, 0.28) !important;
   }
   .testimonial-card .card-body {
     padding: 1.75rem !important;
@@ -137,13 +243,13 @@
     display: flex;
     gap: 0.2rem;
     margin-bottom: 0.9rem;
-    color: #bc8425;
+    color: #d9af5f;
     font-size: 1.45rem;
   }
   .testimonial-quote {
     max-width: 38rem;
     margin: 0 auto 1rem;
-    color: #34423a;
+    color: #cbd5e1;
     font-size: 1.12rem;
     font-style: normal;
     line-height: 1.65;
@@ -170,11 +276,11 @@
     padding: 0;
     border: 0;
     border-radius: 50%;
-    background: #b8c4bc;
+    background: rgba(203, 213, 225, 0.45);
     opacity: 1;
   }
   #testimonialCarousel .carousel-indicators .active {
-    background: #24583a;
+    background: #d9af5f;
   }
   .testimonial-controls .iconify {
     font-size: 1.25rem;
@@ -327,12 +433,31 @@
       color: #fff !important;
     }
   }
+
+  #faqAccordion .accordion-item,
+  #faqAccordion .accordion-button,
+  #faqAccordion .accordion-body {
+    background-color: rgba(15, 23, 42, 0.92);
+    border-color: rgba(217, 175, 95, 0.18);
+    color: #f3f4f6;
+  }
+  #faqAccordion .accordion-button:not(.collapsed) {
+    background-color: rgba(217, 175, 95, 0.12);
+    color: #f3d79c;
+    box-shadow: none;
+  }
   .section-centered {
     max-width: 1200px;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 3.5rem;
     margin-top: 3.5rem;
+    padding: 2rem 1.5rem;
+    border-radius: 2rem;
+    background: rgba(15, 23, 42, 0.72);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 22px 46px rgba(0, 0, 0, 0.16);
+    border: 1px solid rgba(217, 175, 95, 0.12);
   }
   .row.g-4 > [class^='col-'], .row.g-4 > [class*=' col-'] {
     margin-bottom: 2rem;
@@ -341,6 +466,15 @@
   .card.h-100.text-center.shadow {
     margin-bottom: 2rem;
     transition: background 0.25s, color 0.25s, box-shadow 0.25s;
+    border: 1px solid rgba(217, 175, 95, 0.18);
+    background: linear-gradient(180deg, rgba(17, 24, 39, 0.95) 0%, rgba(15, 23, 42, 0.9) 100%);
+    border-radius: 1.5rem;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.2) !important;
+    overflow: hidden;
+    color: #e5e7eb;
+  }
+  .card.h-100.text-center.shadow .card-body {
+    padding: 2rem 1.5rem;
   }
   .my-5 {
     margin-top: 3.5rem !important;
@@ -359,81 +493,118 @@
     overflow-x: hidden;
   }
   .btn-gradient {
-    background: linear-gradient(90deg, #6366f1 0%, #3b82f6 100%) !important;
-    color: #fff !important;
+    background: linear-gradient(135deg, #d9af5f 0%, #b77a2b 100%) !important;
+    color: #111827 !important;
     border: none;
-    font-weight: 600;
-    transition: background 0.2s;
+    font-weight: 800;
+    border-radius: 999px;
+    box-shadow: 0 12px 24px rgba(217, 175, 95, 0.25);
+    transition: background 0.2s, transform 0.2s ease, box-shadow 0.2s ease;
   }
   .btn-gradient:hover, .btn-gradient:focus {
-    background: linear-gradient(90deg, #3b82f6 0%, #6366f1 100%) !important;
-    color: #fff !important;
+    background: linear-gradient(135deg, #e3c17a 0%, #c28632 100%) !important;
+    color: #111827 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 16px 28px rgba(217, 175, 95, 0.3);
+  }
+  .footer-fullwidth {
+    background: linear-gradient(180deg, #070b13 0%, #0d1320 100%);
+    box-shadow: inset 0 1px 0 rgba(217, 175, 95, 0.12);
+    border-top: 1px solid rgba(217, 175, 95, 0.1);
   }
 </style>
 <!-- Hero Section -->
 <div class="hero-fullwidth">
-  <div class="row align-items-center hero-content">
-    <div class="col-md-7 text-start">
-      <h1 class="display-4 fw-bold fade-in text-start">Earn From Your <span class="hero-highlight">Valuable Opinions</span></h1>
-      <p class="lead fade-in text-start">Get up to <span class="fw-bold text-warning">Ksh 300</span> per survey</p>
-      <div class="hero-features-mobile d-flex flex-column align-items-start gap-2 mb-3 fade-in d-md-none">
-        <span><span class="iconify" data-icon="mdi:check-circle" style="color: #fff;"></span> Free and easy to Join</span>
-        <span><span class="iconify" data-icon="mdi:check-circle" style="color: #fff;"></span> Earn and have fun</span>
-        <span><span class="iconify" data-icon="mdi:check-circle" style="color: #fff;"></span> Quick payouts via M-Pesa</span>
+  <div class="container-fluid px-3 px-lg-4 py-5">
+    <div class="row align-items-center hero-content">
+      <div class="col-lg-7 text-start">
+        <div class="hero-badge fade-in">
+          <span class="iconify" data-icon="mdi:shield-check-outline" data-width="18" data-height="18"></span>
+          Trusted by 10,000+ members
+        </div>
+
+        <h1 class="display-4 fw-bold fade-in text-start" style="max-width: 620px; line-height: 1.08; letter-spacing: -0.04em; margin-bottom: 1rem;">
+          Turn your opinions into <span class="hero-highlight">real rewards</span>
+        </h1>
+
+        <p class="lead fade-in text-start" style="max-width: 580px; color: #ffffff; font-size: 1.15rem; font-weight: 500; line-height: 1.7; text-shadow: 0 2px 18px rgba(0,0,0,0.22); opacity: 1;">
+          Get matched with relevant surveys, complete them in minutes, and watch your earnings grow.
+        </p>
+
+        <div class="d-flex flex-wrap align-items-center gap-3 mt-4 fade-in">
+          {% if not user.is_authenticated %}
+            <a href="/register/" class="btn btn-warning btn-lg px-4 hero-btn-wide text-start" style="background: linear-gradient(135deg, #facc15 0%, #f59e0b 100%); color: #111827; border: none;">Start earning now</a>
+          {% endif %}
+
+          {% if user.is_authenticated %}
+            <a href="/dashboard/" class="btn btn-warning btn-lg px-4 hero-btn-wide text-start" style="background: linear-gradient(135deg, #facc15 0%, #f59e0b 100%); color: #111827; border: none;">Go to dashboard</a>
+          {% endif %}
+
+          <a href="#learn-more" class="btn btn-light btn-lg px-4 hero-btn-wide text-start" style="color: #111827; border: none; background: rgba(255,255,255,0.9);">See how it works</a>
+        </div>
+
+        <div class="hero-stats-row fade-in">
+          <div class="stat-pill">
+            <strong>10K+</strong>
+            <span>Members</span>
+          </div>
+          <div class="stat-pill">
+            <strong>50K+</strong>
+            <span>Surveys done</span>
+          </div>
+          <div class="stat-pill">
+            <strong>Ksh 2M+</strong>
+            <span>Paid out</span>
+          </div>
+        </div>
       </div>
-      <div class="d-flex flex-column align-items-start gap-2 mb-3 fade-in d-none d-md-flex">
-        <span><span class="iconify" data-icon="mdi:check-circle" data-width="20" data-height="20" style="color: #fff;"></span> Free and easy to Join</span>
-        <span><span class="iconify" data-icon="mdi:check-circle" data-width="20" data-height="20" style="color: #fff;"></span> Earn and have fun</span>
-        <span><span class="iconify" data-icon="mdi:check-circle" data-width="20" data-height="20" style="color: #fff;"></span> Quick payouts via M-Pesa</span>
+
+      <div class="col-lg-5 text-center d-none d-lg-block">
+        <div class="hero-panel fade-in">
+          <div class="hero-panel-header">Available today</div>
+
+          <div class="hero-panel-card">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <strong>Fashion Survey</strong>
+              <span class="reward">Ksh 180</span>
+            </div>
+            <div class="survey-pill">
+              <span>10 min</span>
+              <span>New</span>
+            </div>
+          </div>
+
+          <div class="hero-panel-card">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <strong>Retail Feedback</strong>
+              <span class="reward">Ksh 240</span>
+            </div>
+            <div class="survey-pill">
+              <span>12 min</span>
+              <span>High match</span>
+            </div>
+          </div>
+
+          <div class="hero-panel-card">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <strong>Brand Research</strong>
+              <span class="reward">Ksh 300</span>
+            </div>
+            <div class="survey-pill">
+              <span>15 min</span>
+              <span>Priority</span>
+            </div>
+          </div>
+        </div>
       </div>
-      {% if not user.is_authenticated %}
-      <a href="/register/" class="btn btn-warning btn-lg px-5 fade-in mb-2 hero-btn-wide text-start">Start Earning Now</a>
-      {% endif %}
-      <div class="d-flex flex-column align-items-start gap-2 mt-3 fade-in">
-        {% if user.is_authenticated %}
-          <a href="/dashboard/" class="btn btn-warning btn-lg hero-btn-wide text-start" style="color:#000;">Go to Dashboard</a>
-        {% endif %}
-        <a href="#learn-more" class="btn btn-light btn-lg hero-btn-wide text-start">Learn More</a>
-      </div>
-    </div>
-    <div class="col-md-5 text-center d-none d-md-block">
-      <!-- Iconify illustration -->
-      <span class="iconify display-1" data-icon="mdi:clipboard-text-outline" data-width="90" data-height="90" style="color:#fff;"></span>
-    </div>
-  </div>
-  <div class="hero-stats-mobile d-md-none">
-    <div class="hero-stat-card">
-      10K+
-      <div class="hero-stat-label">Active Users</div>
-    </div>
-    <div class="hero-stat-card">
-      50K+
-      <div class="hero-stat-label">Surveys Done</div>
-    </div>
-    <div class="hero-stat-card">
-      2M+
-      <div class="hero-stat-label">Paid Out</div>
-</div>
-  </div>
-  <div class="row text-center justify-content-center d-none d-md-flex" style="margin:0; padding:0 0 24px 0; margin-top:90px;">
-  <div class="col-md-4">
-      <h2 class="fw-bold" style="color:#fff;">10K+</h2>
-      <div class="text-light">Active Users</div>
-  </div>
-  <div class="col-md-4">
-      <h2 class="fw-bold" style="color:#fff;">50K+</h2>
-      <div class="text-light">Surveys Done</div>
-  </div>
-  <div class="col-md-4">
-      <h2 class="fw-bold" style="color:#fff;">2M+</h2>
-      <div class="text-light">Paid Out</div>
     </div>
   </div>
 </div>
 
 <!-- How it Works -->
 <div id="learn-more" class="my-5 section-centered">
-  <h2 class="text-center mb-4">How to earn money with PennySurveys?</h2>
+  <h2 class="text-center mb-2" style="font-weight: 800; letter-spacing: -0.03em;">How it works</h2>
+  <p class="text-center text-muted mx-auto mb-4" style="max-width: 640px;">Get matched with relevant surveys, complete them in minutes, and watch your earnings grow.</p>
   <div class="row g-4 justify-content-center">
     <div class="col-md-4 text-center">
       <div class="card h-100 text-center shadow fade-in">
@@ -598,73 +769,97 @@
 </div>
 
 <!-- FAQ -->
-<div class="my-5">
-  <h2 class="text-center mb-4">Frequently Asked Questions</h2>
-  <div class="card shadow mb-4" style="border-radius:1.1rem; background:#f8f9fa; border:none;">
-    <div class="card-body p-4">
-  <div class="accordion mx-auto" id="faqAccordion" style="max-width:700px;">
+<div class="my-5" id="faq">
+  <div class="text-center mb-4">
+    <h2 class="mb-2">Frequently Asked Questions</h2>
+    <p class="text-muted mx-auto" style="max-width:700px; margin-bottom:0;">
+      Everything you need to know about joining PennySurveys, completing surveys, and getting paid.
+    </p>
+  </div>
+
+  <div class="card shadow mb-4" style="border-radius:1.1rem; background:rgba(15, 23, 42, 0.8); border:1px solid rgba(217, 175, 95, 0.18);">
+    <div class="card-body p-3 p-md-4">
+      <div class="accordion mx-auto" id="faqAccordion" style="max-width:760px;">
         <div class="accordion-item mb-3" style="border-radius:0.7rem; overflow:hidden; border:none;">
-      <h2 class="accordion-header" id="faq1">
+          <h2 class="accordion-header" id="faq1">
             <button class="accordion-button d-flex align-items-center gap-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="true" aria-controls="collapse1" style="font-weight:600; font-size:1.08rem;">
               <span class="iconify" data-icon="mdi:help-circle-outline" style="color:#6366f1; font-size:1.3rem;"></span>
-          How can I become a member?
-        </button>
-      </h2>
-      <div id="collapse1" class="accordion-collapse collapse show" aria-labelledby="faq1" data-bs-parent="#faqAccordion">
-        <div class="accordion-body">
-          Signing up is completely free and easy. Just click the "Get Started" button, fill in your email and create a password. After confirming your email, complete your profile to start receiving relevant surveys. The more detailed your profile, the better we can match you with suitable surveys.
+              How can I become a member?
+            </button>
+          </h2>
+          <div id="collapse1" class="accordion-collapse collapse show" aria-labelledby="faq1" data-bs-parent="#faqAccordion">
+            <div class="accordion-body">
+              Joining PennySurveys is free and takes just a few minutes. Click the <strong>Get Started</strong> button, create your account, and complete your profile with accurate details. A full profile helps us match you with surveys that fit your interests and background.
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+
         <div class="accordion-item mb-3" style="border-radius:0.7rem; overflow:hidden; border:none;">
-      <h2 class="accordion-header" id="faq2">
+          <h2 class="accordion-header" id="faq2">
             <button class="accordion-button collapsed d-flex align-items-center gap-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2" aria-expanded="false" aria-controls="collapse2" style="font-weight:600; font-size:1.08rem;">
               <span class="iconify" data-icon="mdi:help-circle-outline" style="color:#6366f1; font-size:1.3rem;"></span>
-          What if I forgot my password?
-        </button>
-      </h2>
-      <div id="collapse2" class="accordion-collapse collapse" aria-labelledby="faq2" data-bs-parent="#faqAccordion">
-        <div class="accordion-body">
-          Click on the "Forgot Password" link on the login page and follow the instructions to reset your password.
+              Why am I not receiving survey invitations?
+            </button>
+          </h2>
+          <div id="collapse2" class="accordion-collapse collapse" aria-labelledby="faq2" data-bs-parent="#faqAccordion">
+            <div class="accordion-body">
+              Survey invitations depend on your profile, demographics, and the surveys currently available. Make sure your profile is complete and up to date, and check back regularly for new opportunities. We cannot send invites to incomplete or less-matched profiles.
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+
         <div class="accordion-item mb-3" style="border-radius:0.7rem; overflow:hidden; border:none;">
-      <h2 class="accordion-header" id="faq3">
+          <h2 class="accordion-header" id="faq3">
             <button class="accordion-button collapsed d-flex align-items-center gap-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3" aria-expanded="false" aria-controls="collapse3" style="font-weight:600; font-size:1.08rem;">
               <span class="iconify" data-icon="mdi:help-circle-outline" style="color:#6366f1; font-size:1.3rem;"></span>
-          Why am I not receiving any survey invitations?
-        </button>
-      </h2>
-      <div id="collapse3" class="accordion-collapse collapse" aria-labelledby="faq3" data-bs-parent="#faqAccordion">
-        <div class="accordion-body">
-          Make sure your profile is complete and up to date. Survey invitations depend on your profile matching available surveys.
+              Why am I not qualified for a survey?
+            </button>
+          </h2>
+          <div id="collapse3" class="accordion-collapse collapse" aria-labelledby="faq3" data-bs-parent="#faqAccordion">
+            <div class="accordion-body">
+              Each survey has specific eligibility requirements such as location, age, industry, shopping habits, or product usage. If you do not match the target audience, you may be screened out before completing the survey. This is normal and helps keep the research accurate.
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+
         <div class="accordion-item mb-3" style="border-radius:0.7rem; overflow:hidden; border:none;">
-      <h2 class="accordion-header" id="faq4">
+          <h2 class="accordion-header" id="faq4">
             <button class="accordion-button collapsed d-flex align-items-center gap-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapse4" aria-expanded="false" aria-controls="collapse4" style="font-weight:600; font-size:1.08rem;">
               <span class="iconify" data-icon="mdi:help-circle-outline" style="color:#6366f1; font-size:1.3rem;"></span>
-          How can I withdraw my money?
-        </button>
-      </h2>
-      <div id="collapse4" class="accordion-collapse collapse" aria-labelledby="faq4" data-bs-parent="#faqAccordion">
-        <div class="accordion-body">
-          Go to your dashboard, click on "Withdraw", and choose your preferred payment method (M-Pesa, PayPal, or bank transfer).
+              How do rewards and payouts work?
+            </button>
+          </h2>
+          <div id="collapse4" class="accordion-collapse collapse" aria-labelledby="faq4" data-bs-parent="#faqAccordion">
+            <div class="accordion-body">
+              Rewards vary by survey length and complexity. Once your completed surveys are approved, the amount is added to your wallet. You can withdraw when your balance reaches the minimum payout threshold. We support secure payment methods such as M-Pesa, PayPal, and bank transfer.
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+
         <div class="accordion-item mb-3" style="border-radius:0.7rem; overflow:hidden; border:none;">
-      <h2 class="accordion-header" id="faq5">
+          <h2 class="accordion-header" id="faq5">
             <button class="accordion-button collapsed d-flex align-items-center gap-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapse5" aria-expanded="false" aria-controls="collapse5" style="font-weight:600; font-size:1.08rem;">
               <span class="iconify" data-icon="mdi:help-circle-outline" style="color:#6366f1; font-size:1.3rem;"></span>
-          Why am I not qualified for a survey?
-        </button>
-      </h2>
-      <div id="collapse5" class="accordion-collapse collapse" aria-labelledby="faq5" data-bs-parent="#faqAccordion">
-        <div class="accordion-body">
-          Surveys have specific requirements. If you do not meet the criteria, you may not qualify for certain surveys.
+              How do I withdraw my earnings?
+            </button>
+          </h2>
+          <div id="collapse5" class="accordion-collapse collapse" aria-labelledby="faq5" data-bs-parent="#faqAccordion">
+            <div class="accordion-body">
+              Go to your dashboard and click <strong>Withdraw</strong>. Choose your preferred payment method, confirm your details, and submit the request. Processing time depends on the selected method and our payout schedule, but we aim to keep it as quick and transparent as possible.
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item" style="border-radius:0.7rem; overflow:hidden; border:none;">
+          <h2 class="accordion-header" id="faq6">
+            <button class="accordion-button collapsed d-flex align-items-center gap-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapse6" aria-expanded="false" aria-controls="collapse6" style="font-weight:600; font-size:1.08rem;">
+              <span class="iconify" data-icon="mdi:help-circle-outline" style="color:#6366f1; font-size:1.3rem;"></span>
+              What if I forget my password or need support?
+            </button>
+          </h2>
+          <div id="collapse6" class="accordion-collapse collapse" aria-labelledby="faq6" data-bs-parent="#faqAccordion">
+            <div class="accordion-body">
+              Use the <strong>Forgot Password</strong> link on the login page to reset it securely. If you still need help, contact our support team at support@pennysurveys.com and we will be happy to assist with account, payout, or survey-related questions.
             </div>
           </div>
         </div>
@@ -675,11 +870,17 @@
 
 <!-- Contact Section -->
 <div class="my-5">
-  <h2 class="text-center mb-4">Get in Touch</h2>
-  <div class="row justify-content-center">
-    <div class="col-md-6">
-      <div class="card shadow mb-4 contact-info-gradient">
-        <div class="card-body">
+  <div class="text-center mb-4">
+    <h2 class="mb-2">Get in Touch</h2>
+    <p class="text-muted mx-auto" style="max-width:700px; margin-bottom:0;">
+      We’re here to help with account questions, payment support, survey issues, and anything else you need.
+    </p>
+  </div>
+
+  <div class="row justify-content-center g-4">
+    <div class="col-lg-5">
+      <div class="card shadow mb-4 contact-info-gradient" style="border:none; border-radius:1.1rem;">
+        <div class="card-body p-4">
           <h5 class="mb-3">Contact Information</h5>
           <div class="d-flex flex-column gap-3">
             <div>
@@ -699,41 +900,50 @@
             <div>
               <div class="d-flex align-items-center mb-1">
                 <span class="iconify me-2" data-icon="mdi:map-marker-outline" style="color:#fd7e14; font-size:1.4rem;"></span>
-                <span class="fw-bold">Address</span>
+                <span class="fw-bold">Office</span>
               </div>
               <div class="ps-4 text-muted" style="font-size:1.08rem;">Nairobi, Kenya</div>
             </div>
             <div>
               <div class="d-flex align-items-center mb-1">
                 <span class="iconify me-2" data-icon="mdi:chat-outline" style="color:#3b82f6; font-size:1.4rem;"></span>
-                <span class="fw-bold">Live Chat</span>
+                <span class="fw-bold">Support Hours</span>
               </div>
-              <div class="ps-4 text-muted" style="font-size:1.08rem;">Available</div>
+              <div class="ps-4 text-muted" style="font-size:1.08rem;">Monday - Friday, 9:00 AM - 6:00 PM</div>
             </div>
           </div>
         </div>
       </div>
+    </div>
+
+    <div class="col-lg-5">
       <form>
-        <div class="card shadow mb-4">
-          <div class="card-body">
-        <div class="mb-3">
-          <label for="name" class="form-label">Full Name</label>
-          <input type="text" class="form-control" id="name" placeholder="John Doe">
-        </div>
-        <div class="mb-3">
-          <label for="email" class="form-label">Email</label>
-          <input type="email" class="form-control" id="email" placeholder="john@example.com">
-        </div>
-        <div class="mb-3">
-          <label for="subject" class="form-label">Subject</label>
-          <input type="text" class="form-control" id="subject" placeholder="How can we help you?">
-        </div>
-        <div class="mb-3">
-          <label for="message" class="form-label">Message</label>
-          <textarea class="form-control" id="message" rows="3" placeholder="Your message here..."></textarea>
-        </div>
+        <div class="card shadow mb-4" style="border:none; border-radius:1.1rem;">
+          <div class="card-body p-4">
+            <div class="mb-3">
+              <label for="name" class="form-label">Full Name</label>
+              <input type="text" class="form-control" id="name" placeholder="John Doe">
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" class="form-control" id="email" placeholder="john@example.com">
+            </div>
+            <div class="mb-3">
+              <label for="subject" class="form-label">Subject</label>
+              <input type="text" class="form-control" id="subject" placeholder="How can we help you?">
+            </div>
+            <div class="mb-3">
+              <label for="message" class="form-label">Message</label>
+              <textarea class="form-control" id="message" rows="4" placeholder="Tell us your question or concern..."></textarea>
+            </div>
             <button type="submit" class="btn btn-gradient w-100"><span class="iconify me-1" data-icon="mdi:send"></span>Send Message</button>
           </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
         </div>
       </form>
     </div>
@@ -745,7 +955,7 @@
   <div class="footer-content">
     <div class="footer-col mb-3">
       <h5>PennySurveys</h5>
-      <p>Earn money by participating in interesting surveys from our partners. Fast payments, user-friendly platform.</p>
+      <p>Earn rewards by sharing your opinion through quick, engaging surveys from trusted brands and research partners.</p>
       <div class="footer-socials">
         <a href="#" title="Facebook"><span class="iconify" data-icon="mdi:facebook" data-width="28" data-height="28"></span></a>
         <a href="#" title="Twitter"><span class="iconify" data-icon="mdi:twitter" data-width="28" data-height="28"></span></a>
@@ -753,6 +963,7 @@
         <a href="#" title="LinkedIn"><span class="iconify" data-icon="mdi:linkedin" data-width="28" data-height="28"></span></a>
       </div>
     </div>
+
     <div class="footer-col mb-3">
       <h6>Quick Links</h6>
       <ul class="list-unstyled">
@@ -763,24 +974,30 @@
         <li><a href="#" class="text-light">Referrals</a></li>
       </ul>
     </div>
+
     <div class="footer-col mb-3">
       <h6>Support</h6>
       <ul class="list-unstyled">
-        <li><a href="#faqAccordion" class="text-light">FAQ</a></li>
+        <li><a href="#faq" class="text-light">FAQ</a></li>
         <li><a href="#" class="text-light">Privacy Policy</a></li>
         <li><a href="#" class="text-light">Terms of Service</a></li>
         <li><a href="#" class="text-light">Contact Us</a></li>
       </ul>
     </div>
+
     <div class="footer-col mb-3">
       <h6>Newsletter</h6>
-      <form class="d-flex">
-        <input type="email" class="form-control me-2" placeholder="Your email">
-        <button class="btn btn-warning" type="submit">Subscribe</button>
+      <p class="text-light text-opacity-75 mb-3">Get occasional updates and new survey opportunities.</p>
+      <form class="d-flex gap-2">
+        <input type="email" class="form-control" placeholder="Your email">
+        <button class="btn btn-warning" type="submit">Join</button>
       </form>
     </div>
   </div>
-  <div class="text-center text-muted mt-4">© 2025 PennySurveys. All rights reserved.</div>
+
+  <div class="border-top border-secondary mt-4 pt-3 text-center text-light text-opacity-75">
+    © 2025 PennySurveys. All rights reserved.
+  </div>
 </footer>
 
 <!-- Bootstrap JS -->

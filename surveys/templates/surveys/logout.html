@@ -1,6 +1,12 @@
 {% extends 'surveys/base.html' %}
 {% block title %}Logged Out | PennySurveys{% endblock %}
 {% block content %}
-<h2>You have been logged out.</h2>
-<a href="/login/" class="btn btn-link">Login again</a>
+<main class="container py-5" style="max-width: 640px;">
+	<section class="card text-center p-4 p-md-5" style="border: 1px solid var(--luxury-border);">
+		<span class="iconify mb-3" data-icon="mdi:check-circle-outline" aria-hidden="true" style="font-size: 2.5rem; color: var(--luxury-gold);"></span>
+		<h1 class="h3 mb-2">You have been logged out</h1>
+		<p class="text-muted mb-4">Your account is signed out on this device.</p>
+		<a href="/login/" class="btn btn-primary align-self-center">Log in again</a>
+	</section>
+</main>
 {% endblock %} 
