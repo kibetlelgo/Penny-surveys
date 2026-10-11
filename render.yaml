@@ -6,8 +6,12 @@ services:
     startCommand: gunicorn PennySurveys.wsgi:application
     envVars:
       - key: PYTHON_VERSION
-        value: 3.11.0
+        value: "3.11"
       - key: DEBUG
-        value: False
+        value: "False"
       - key: ALLOWED_HOSTS
-        value: penny-surveys-2.onrender.com 
+        value: "*"
+      - key: SECRET_KEY
+        value: "CHANGE-ME-IN-RENDER-DASHBOARD"
+      - key: DATABASE_URL
+        value: ""
