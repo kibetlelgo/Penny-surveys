@@ -18,6 +18,269 @@
   @keyframes fadeIn {
     to { opacity: 1; }
   }
+  .feature-illustration {
+    display: block;
+    width: 132px;
+    height: 86px;
+    margin: 0 auto 0.5rem;
+    overflow: visible;
+  }
+  .feature-illustration__panel {
+    fill: rgba(15, 23, 42, 0.72);
+    stroke: #334155;
+    stroke-width: 2;
+  }
+  .feature-illustration__line {
+    fill: none;
+    stroke: #cbd5e1;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .feature-illustration__indigo-line {
+    fill: none;
+    stroke: #818cf8;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .feature-illustration__indigo-fill {
+    fill: #818cf8;
+  }
+  .feature-illustration__gold-line {
+    fill: none;
+    stroke: #d9af5f;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .feature-illustration__gold-fill {
+    fill: #d9af5f;
+  }
+  .feature-fast__hands {
+    transform-box: view-box;
+    transform-origin: 92px 60px;
+    animation: featureClockSweep 8s linear infinite;
+  }
+  .feature-updates__bell {
+    transform-box: fill-box;
+    transform-origin: 50% 12%;
+    animation: featureBellRing 3.2s ease-in-out infinite;
+  }
+  .feature-updates__badge {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: featureBadgePulse 2.8s ease-in-out infinite;
+  }
+  .feature-navigation__route {
+    stroke-dasharray: 110;
+    stroke-dashoffset: 110;
+    animation: featureRouteDraw 4s ease-in-out infinite;
+  }
+  .feature-navigation__needle {
+    transform-box: view-box;
+    transform-origin: 92px 60px;
+    animation: featureCompassSearch 4.5s ease-in-out infinite;
+  }
+  .feature-earn__arrow {
+    stroke-dasharray: 110;
+    stroke-dashoffset: 110;
+    animation: featureEarnDraw 3.8s ease-in-out infinite;
+  }
+  .feature-earn__coin {
+    transform-box: view-box;
+    animation: featureCoinRise 3.8s ease-in-out infinite;
+  }
+  @keyframes featureClockSweep {
+    to { transform: rotate(360deg); }
+  }
+  @keyframes featureBellRing {
+    0%, 18%, 100% { transform: rotate(0); }
+    3% { transform: rotate(-10deg); }
+    6% { transform: rotate(10deg); }
+    9% { transform: rotate(-7deg); }
+    12% { transform: rotate(5deg); }
+    15% { transform: rotate(-2deg); }
+  }
+  @keyframes featureBadgePulse {
+    0%, 100% { transform: scale(0.85); opacity: 0.55; }
+    50% { transform: scale(1); opacity: 1; }
+  }
+  @keyframes featureRouteDraw {
+    0%, 12%, 100% { stroke-dashoffset: 110; opacity: 0.35; }
+    48%, 76% { stroke-dashoffset: 0; opacity: 1; }
+    88% { stroke-dashoffset: 110; opacity: 0.35; }
+  }
+  @keyframes featureCompassSearch {
+    0%, 55%, 100% { transform: rotate(0); }
+    14% { transform: rotate(24deg); }
+    30% { transform: rotate(-16deg); }
+    43% { transform: rotate(8deg); }
+  }
+  @keyframes featureEarnDraw {
+    0%, 12%, 100% { stroke-dashoffset: 110; opacity: 0.35; }
+    48%, 78% { stroke-dashoffset: 0; opacity: 1; }
+    88% { stroke-dashoffset: 110; opacity: 0.35; }
+  }
+  @keyframes featureCoinRise {
+    0%, 12%, 100% { transform: translate(0, 0); opacity: 0.35; }
+    48%, 64% { transform: translate(46px, -38px); opacity: 1; }
+    78% { transform: translate(46px, -38px); opacity: 0.35; }
+  }
+  .how-step-illustration {
+    display: block;
+    width: 132px;
+    height: 86px;
+    margin: 0 auto 0.5rem;
+    overflow: visible;
+  }
+  .how-step-panel {
+    fill: rgba(15, 23, 42, 0.72);
+    stroke: #334155;
+    stroke-width: 2;
+  }
+  .how-step-line {
+    fill: none;
+    stroke: #cbd5e1;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .how-step-indigo-line {
+    fill: none;
+    stroke: #818cf8;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .how-step-indigo-fill {
+    fill: #818cf8;
+  }
+  .how-step-gold-line {
+    fill: none;
+    stroke: #d9af5f;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .how-step-gold-fill {
+    fill: #d9af5f;
+  }
+  .how-step-signup__progress {
+    stroke-dasharray: 38;
+    stroke-dashoffset: 38;
+    animation: howStepDrawProgress 3.4s ease-in-out infinite;
+  }
+  .how-step-signup__plus {
+    stroke-dasharray: 24;
+    stroke-dashoffset: 24;
+    animation: howStepDrawPlus 3.4s ease-in-out infinite;
+  }
+  .how-step-survey__line {
+    stroke-dasharray: 42;
+    stroke-dashoffset: 42;
+    animation: howStepWriteLine 3.6s ease-in-out infinite;
+  }
+  .how-step-survey__line--second {
+    animation-delay: 0.18s;
+  }
+  .how-step-survey__line--third {
+    animation-delay: 0.36s;
+  }
+  .how-step-survey__line--fourth {
+    animation-delay: 0.54s;
+  }
+  .how-step-survey__pen {
+    transform-box: fill-box;
+    transform-origin: 10% 90%;
+    animation: howStepMovePen 3.6s ease-in-out infinite;
+  }
+  .how-step-payout__coin {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: howStepMoveCoin 3.4s ease-in-out infinite;
+  }
+  .how-step-payout__transfer {
+    stroke-dasharray: 40;
+    stroke-dashoffset: 40;
+    animation: howStepDrawTransfer 3.4s ease-in-out infinite;
+  }
+  @keyframes howStepDrawProgress {
+    0%, 12%, 100% { stroke-dashoffset: 38; opacity: 0.35; }
+    38%, 82% { stroke-dashoffset: 0; opacity: 1; }
+    90% { stroke-dashoffset: 38; opacity: 0.35; }
+  }
+  @keyframes howStepDrawPlus {
+    0%, 24%, 100% { stroke-dashoffset: 24; opacity: 0.35; }
+    44%, 82% { stroke-dashoffset: 0; opacity: 1; }
+    90% { stroke-dashoffset: 24; opacity: 0.35; }
+  }
+  @keyframes howStepWriteLine {
+    0%, 12%, 100% { stroke-dashoffset: 42; opacity: 0.35; }
+    31%, 82% { stroke-dashoffset: 0; opacity: 1; }
+    90% { stroke-dashoffset: 42; opacity: 0.35; }
+  }
+  @keyframes howStepMovePen {
+    0%, 12%, 100% { transform: translate(0, 0) rotate(-35deg); }
+    29% { transform: translate(18px, 0) rotate(-35deg); }
+    34% { transform: translate(0, 7px) rotate(-35deg); }
+    48% { transform: translate(18px, 7px) rotate(-35deg); }
+    53% { transform: translate(0, 14px) rotate(-35deg); }
+    68%, 82% { transform: translate(18px, 14px) rotate(-35deg); }
+    90% { transform: translate(0, 0) rotate(-35deg); }
+  }
+  @keyframes howStepMoveCoin {
+    0%, 12%, 100% { transform: translateX(0); opacity: 0.35; }
+    48%, 62% { transform: translateX(34px); opacity: 1; }
+    78% { transform: translateX(34px); opacity: 0.35; }
+  }
+  @keyframes howStepDrawTransfer {
+    0%, 12%, 100% { stroke-dashoffset: 40; opacity: 0.3; }
+    48%, 64% { stroke-dashoffset: 0; opacity: 1; }
+    78% { stroke-dashoffset: 40; opacity: 0.3; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .feature-fast__hands,
+    .feature-updates__bell,
+    .feature-updates__badge,
+    .feature-navigation__route,
+    .feature-navigation__needle,
+    .feature-earn__arrow,
+    .feature-earn__coin {
+      animation: none;
+    }
+    .feature-navigation__route,
+    .feature-earn__arrow {
+      stroke-dashoffset: 0;
+      opacity: 1;
+    }
+    .feature-earn__coin {
+      transform: translate(46px, -38px);
+      opacity: 1;
+    }
+    .how-step-signup__progress,
+    .how-step-signup__plus,
+    .how-step-survey__line,
+    .how-step-survey__pen,
+    .how-step-payout__coin,
+    .how-step-payout__transfer {
+      animation: none;
+    }
+    .how-step-signup__progress,
+    .how-step-signup__plus,
+    .how-step-survey__line,
+    .how-step-payout__transfer {
+      stroke-dashoffset: 0;
+      opacity: 1;
+    }
+    .how-step-survey__pen {
+      transform: translate(18px, 14px) rotate(-35deg);
+    }
+    .how-step-payout__coin {
+      transform: translateX(34px);
+      opacity: 1;
+    }
+  }
   a, .btn, .card {
     transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
   }
@@ -391,7 +654,6 @@
       color: #fff !important;
       box-shadow: 0 4px 18px rgba(99,102,241,0.13);
     }
-    .how-earn-answer-gradient .iconify,
     .how-earn-answer-gradient .card-title,
     .how-earn-answer-gradient .card-text {
       color: #fff !important;
@@ -402,7 +664,6 @@
       color: #fff !important;
       box-shadow: 0 4px 18px rgba(99,102,241,0.13);
     }
-    .features-fast-gradient .iconify,
     .features-fast-gradient .card-title,
     .features-fast-gradient .card-text {
       color: #fff !important;
@@ -413,7 +674,6 @@
       color: #fff !important;
       box-shadow: 0 4px 18px rgba(99,102,241,0.13);
     }
-    .features-easy-gradient .iconify,
     .features-easy-gradient .card-title,
     .features-easy-gradient .card-text {
       color: #fff !important;
@@ -609,7 +869,15 @@
     <div class="col-md-4 text-center">
       <div class="card h-100 text-center shadow fade-in">
         <div class="card-body">
-          <span class="iconify display-4 mb-2" data-icon="mdi:account-plus-outline" data-width="60" data-height="60" style="color:#6366f1;"></span>
+          <svg class="how-step-illustration mb-2" viewBox="0 0 184 120" fill="none" aria-hidden="true" focusable="false">
+            <rect class="how-step-panel" x="48" y="13" width="88" height="94" rx="16" />
+            <path class="how-step-indigo-line" d="M78 13V8h28v5" />
+            <circle class="how-step-indigo-line" cx="92" cy="41" r="10" />
+            <path class="how-step-line" d="M73 69c3-9 10-13 19-13s16 4 19 13" />
+            <path class="how-step-line how-step-signup__progress" d="M77 87h30" />
+            <circle class="how-step-panel" cx="128" cy="82" r="17" />
+            <path class="how-step-gold-line how-step-signup__plus" d="M128 72v20m-10-10h20" />
+          </svg>
           <h5 class="card-title">Sign up for free</h5>
           <p class="card-text">Registration takes less than 2 minutes and you can start taking surveys right away.</p>
         </div>
@@ -618,7 +886,20 @@
     <div class="col-md-4 text-center">
       <div class="card h-100 text-center shadow fade-in how-earn-answer-gradient">
         <div class="card-body">
-          <span class="iconify display-4 mb-2" data-icon="mdi:clipboard-edit-outline" data-width="60" data-height="60" style="color:#6366f1;"></span>
+          <svg class="how-step-illustration mb-2" viewBox="0 0 184 120" fill="none" aria-hidden="true" focusable="false">
+            <rect class="how-step-panel" x="42" y="10" width="100" height="100" rx="14" />
+            <rect class="how-step-indigo-fill" x="76" y="7" width="32" height="11" rx="5" />
+            <path class="how-step-line" d="M58 39h49m-49 18h49m-49 18h49m-49 18h49" />
+            <path class="how-step-gold-line how-step-survey__line" d="M58 39h42" />
+            <path class="how-step-gold-line how-step-survey__line how-step-survey__line--second" d="M58 57h42" />
+            <path class="how-step-gold-line how-step-survey__line how-step-survey__line--third" d="M58 75h42" />
+            <path class="how-step-gold-line how-step-survey__line how-step-survey__line--fourth" d="M58 93h42" />
+            <g class="how-step-survey__pen">
+              <path class="how-step-gold-fill" d="m54 34 6-6 22 22-6 6z" />
+              <path class="how-step-indigo-fill" d="m54 34-4 10 10-4z" />
+              <path class="how-step-line" d="m78 49 4 4" />
+            </g>
+          </svg>
           <h5 class="card-title">Answer surveys</h5>
           <p class="card-text">Complete surveys from our partners and earn money for each completed survey.</p>
         </div>
@@ -627,7 +908,20 @@
     <div class="col-md-4 text-center">
       <div class="card h-100 text-center shadow fade-in">
         <div class="card-body">
-          <span class="iconify display-4 mb-2" data-icon="mdi:wallet-outline" data-width="60" data-height="60" style="color:#6366f1;"></span>
+          <svg class="how-step-illustration mb-2" viewBox="0 0 184 120" fill="none" aria-hidden="true" focusable="false">
+            <rect class="how-step-panel" x="34" y="15" width="116" height="90" rx="16" />
+            <rect class="how-step-indigo-line" x="49" y="34" width="36" height="48" rx="7" />
+            <path class="how-step-line" d="M58 47h18m-18 9h12" />
+            <path class="how-step-indigo-line" d="M92 59h27m-8-8 8 8-8 8" />
+            <path class="how-step-line" d="M105 42h28a7 7 0 0 1 7 7v29a7 7 0 0 1-7 7h-28a7 7 0 0 1-7-7V49a7 7 0 0 1 7-7Z" />
+            <path class="how-step-gold-line" d="M111 51h29v25h-29a7 7 0 0 1-7-7v-11a7 7 0 0 1 7-7Z" />
+            <circle class="how-step-gold-fill" cx="119" cy="63" r="3" />
+            <g class="how-step-payout__coin">
+              <circle class="how-step-gold-fill" cx="60" cy="91" r="11" />
+              <path d="M60 85v12m4-9c0-2-2-3-4-3s-4 1-4 3 2 2 4 3 4 1 4 3-2 3-4 3-4-1-4-3" stroke="#111827" stroke-width="1.5" stroke-linecap="round" />
+            </g>
+            <path class="how-step-gold-line how-step-payout__transfer" d="M71 91h42" />
+          </svg>
           <h5 class="card-title">Withdraw money</h5>
           <p class="card-text">Cash out your earnings through M-Pesa, PayPal, or bank transfer when you reach the threshold.</p>
         </div>
@@ -643,7 +937,16 @@
     <div class="col-md-3">
       <div class="card h-100 text-center shadow features-fast-gradient">
         <div class="card-body">
-          <span class="iconify display-6 mb-2" data-icon="mdi:timer-outline" data-width="48" data-height="48" style="color:#3b82f6;"></span>
+          <svg class="feature-illustration mb-2" viewBox="0 0 184 120" fill="none" aria-hidden="true" focusable="false">
+            <circle class="feature-illustration__panel" cx="92" cy="60" r="40" />
+            <circle class="feature-illustration__indigo-line" cx="92" cy="60" r="31" />
+            <path class="feature-illustration__line" d="M92 34v5m0 42v5m-26-26h5m42 0h5m-44-18 4 4m30 30 4 4m0-38-4 4M71 75l-4 4" />
+            <g class="feature-fast__hands">
+              <path class="feature-illustration__gold-line" d="M92 60V40" />
+              <path class="feature-illustration__line" d="m92 60 16 10" />
+            </g>
+            <circle class="feature-illustration__gold-fill" cx="92" cy="60" r="3.5" />
+          </svg>
           <h5 class="card-title">Fast Processing</h5>
           <p class="card-text">Get payments within 24-48 hours of withdrawal request, no long waiting times.</p>
         </div>
@@ -652,7 +955,17 @@
     <div class="col-md-3">
       <div class="card h-100 text-center shadow">
         <div class="card-body">
-          <span class="iconify display-6 mb-2" data-icon="mdi:bell-outline" data-width="48" data-height="48" style="color:#3b82f6;"></span>
+          <svg class="feature-illustration mb-2" viewBox="0 0 184 120" fill="none" aria-hidden="true" focusable="false">
+            <rect class="feature-illustration__panel" x="43" y="15" width="98" height="90" rx="22" />
+            <g class="feature-updates__bell">
+              <path class="feature-illustration__indigo-line" d="M65 76h54l-7-9V51c0-13-8-21-20-21S72 38 72 51v16z" />
+              <path class="feature-illustration__gold-line" d="M84 82c2 7 12 7 16 0" />
+            </g>
+            <g class="feature-updates__badge">
+              <circle class="feature-illustration__gold-fill" cx="122" cy="35" r="12" />
+              <path d="M122 29v12m-6-6h12" stroke="#111827" stroke-width="2" stroke-linecap="round" />
+            </g>
+          </svg>
           <h5 class="card-title">Regular updates</h5>
           <p class="card-text">Get notified when new surveys that match your profile are available.</p>
         </div>
@@ -661,7 +974,17 @@
     <div class="col-md-3">
       <div class="card h-100 text-center shadow features-easy-gradient">
         <div class="card-body">
-          <span class="iconify display-6 mb-2" data-icon="mdi:compass-outline" data-width="48" data-height="48" style="color:#3b82f6;"></span>
+          <svg class="feature-illustration mb-2" viewBox="0 0 184 120" fill="none" aria-hidden="true" focusable="false">
+            <rect class="feature-illustration__panel" x="39" y="13" width="106" height="94" rx="20" />
+            <path class="feature-illustration__gold-line feature-navigation__route" d="M53 88c13-20 21-19 33-9 11 9 20 7 27-8 5-10 10-15 19-20" />
+            <circle class="feature-illustration__panel" cx="92" cy="57" r="28" />
+            <circle class="feature-illustration__indigo-line" cx="92" cy="57" r="21" />
+            <g class="feature-navigation__needle">
+              <path class="feature-illustration__gold-fill" d="m92 39-7 21 7-4 7 4z" />
+              <path class="feature-illustration__indigo-fill" d="m92 75 7-19-7 4-7-4z" />
+            </g>
+            <circle class="feature-illustration__line" cx="92" cy="57" r="3" />
+          </svg>
           <h5 class="card-title">Easy Navigation</h5>
           <p class="card-text">User-friendly interface makes it simple to find and complete surveys.</p>
         </div>
@@ -670,7 +993,19 @@
     <div class="col-md-3">
       <div class="card h-100 text-center shadow">
         <div class="card-body">
-          <span class="iconify display-6 mb-2" data-icon="mdi:trending-up" data-width="48" data-height="48" style="color:#3b82f6;"></span>
+          <svg class="feature-illustration mb-2" viewBox="0 0 184 120" fill="none" aria-hidden="true" focusable="false">
+            <rect class="feature-illustration__panel" x="34" y="14" width="116" height="92" rx="18" />
+            <path class="feature-illustration__line" d="M51 87h83" />
+            <rect class="feature-illustration__indigo-fill" x="61" y="67" width="12" height="20" rx="3" />
+            <rect class="feature-illustration__indigo-fill" x="81" y="55" width="12" height="32" rx="3" opacity="0.8" />
+            <rect class="feature-illustration__indigo-fill" x="101" y="44" width="12" height="43" rx="3" opacity="0.65" />
+            <path class="feature-illustration__gold-line feature-earn__arrow" d="m52 62 25-15 19 7 35-29" />
+            <path class="feature-illustration__gold-line" d="M119 25h12v12" />
+            <g class="feature-earn__coin">
+              <circle class="feature-illustration__gold-fill" cx="55" cy="83" r="11" />
+              <text x="55" y="87" text-anchor="middle" fill="#111827" font-size="12" font-weight="700">$</text>
+            </g>
+          </svg>
           <h5 class="card-title">Earn More</h5>
           <p class="card-text">Refer friends to earn additional income through our referral program.</p>
         </div>
@@ -996,7 +1331,7 @@
   </div>
 
   <div class="border-top border-secondary mt-4 pt-3 text-center text-light text-opacity-75">
-    © 2025 PennySurveys. All rights reserved.
+    © 2026 PennySurveys. All rights reserved.
   </div>
 </footer>
 
