@@ -733,5 +733,133 @@
   {% endif %}
   {% block content %}{% endblock %}
 </div>
+<style>
+  .payout-demo {
+    position: fixed;
+    top: 92px;
+    right: 18px;
+    z-index: 1040;
+    width: min(300px, calc(100vw - 24px));
+    padding: 0.85rem 1rem;
+    border: 1px solid rgba(217, 175, 95, 0.75);
+    border-radius: 0.75rem;
+    background: linear-gradient(135deg, rgba(217, 175, 95, 0.12), rgba(183, 122, 43, 0.08));
+    color: #fff8e8;
+    box-shadow: 0 14px 34px rgba(183, 122, 43, 0.25);
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .payout-demo.is-leaving {
+    opacity: 0;
+    transform: translateX(18px) scale(0.98);
+  }
+  .payout-demo__heading {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding-right: 1.8rem;
+    color: #f7d184;
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+  .payout-demo__tag {
+    margin-left: auto;
+    padding: 0.1rem 0.4rem;
+    border: 1px solid rgba(217, 175, 95, 0.5);
+    border-radius: 0.35rem;
+    color: #f7d184;
+    font-size: 0.65rem;
+    line-height: 1.4;
+  }
+  .payout-demo__message {
+    margin: 0.45rem 0 0.25rem;
+    min-height: 2.6em;
+    color: #fff4d1;
+    font-size: 0.85rem;
+  }
+  .payout-demo__close {
+    position: absolute;
+    top: 0.55rem;
+    right: 0.55rem;
+    display: inline-flex;
+    width: 1.65rem;
+    height: 1.65rem;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: #f7d184;
+  }
+  .payout-demo__close:hover,
+  .payout-demo__close:focus-visible {
+    background: rgba(217, 175, 95, 0.18);
+    color: #fff1bf;
+  }
+  @media (max-width: 700px) {
+    .payout-demo {
+      top: auto;
+      right: auto;
+      bottom: 12px;
+      left: 12px;
+      width: min(280px, calc(100vw - 24px));
+    }
+    .payout-demo.is-leaving {
+      transform: translateX(-24px) scale(0.97);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .payout-demo {
+      transition: none;
+    }
+  }
+</style>
+<aside class="payout-demo" role="status" aria-live="polite" aria-label="Withdrawal activity preview">
+  <button class="payout-demo__close" type="button" aria-label="Dismiss sample activity" onclick="this.closest('.payout-demo').remove()">
+    <span class="iconify" data-icon="mdi:close" aria-hidden="true"></span>
+  </button>
+  <div class="payout-demo__heading">
+    <span class="iconify" data-icon="mdi:cash-check" aria-hidden="true"></span>
+    Withdrawal activity
+  </div>
+  <p class="payout-demo__message" id="payoutDemoMessage">Amani Wanjiku withdrew Ksh 6,000</p>
+</aside>
+<script>
+  (function() {
+    var message = document.getElementById('payoutDemoMessage');
+    if (!message) return;
+
+    var examples = [
+      'Amani Wanjiku withdrew Ksh 6,000',
+      'Brian Otieno withdrew Ksh 9,500',
+      'Neema Kamau withdrew Ksh 7,200',
+      'Kevin Mwangi withdrew Ksh 13,750',
+      'Zawadi Njeri withdrew Ksh 18,000',
+      'Baraka Kiptoo withdrew Ksh 11,950',
+      'Faith Achieng withdrew Ksh 15,400',
+      'Dennis Mutua withdrew Ksh 20,000',
+      'Miriam Wekesa withdrew Ksh 8,050',
+      'David Kibet withdrew Ksh 16,800'
+    ];
+    var currentExample = 0;
+
+    var popup = message.closest('.payout-demo');
+
+    function rotateExample() {
+      if (!popup.isConnected) return;
+      popup.classList.add('is-leaving');
+      window.setTimeout(function() {
+        if (!popup.isConnected) return;
+        currentExample = (currentExample + 1) % examples.length;
+        message.textContent = examples[currentExample];
+        popup.classList.remove('is-leaving');
+        window.setTimeout(rotateExample, 3000);
+      }, 600);
+    }
+
+    window.setTimeout(rotateExample, 3000);
+  })();
+</script>
 </body>
 </html> 

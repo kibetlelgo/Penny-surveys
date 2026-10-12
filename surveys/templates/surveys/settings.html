@@ -175,7 +175,7 @@
   <div class="settings-section">
     <div class="d-flex justify-content-between align-items-center mb-2">
       <div class="settings-section-title">Payment Methods</div>
-      <button class="settings-btn">Add Payment Method</button>
+      <button class="settings-btn" data-bs-toggle="modal" data-bs-target="#addMpesaModal">Add Payment Method</button>
     </div>
     {% if profile and profile.mpesa_number %}
     <div class="settings-card d-flex align-items-center justify-content-between">
@@ -222,6 +222,45 @@
     </div>
     {% endif %}
   </div>
+
+  <!-- Add M-PESA Modal -->
+  <div class="modal fade" id="addMpesaModal" tabindex="-1" aria-labelledby="addMpesaModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form method="post" action="/add-mpesa-number/?next=/settings/">
+          {% csrf_token %}
+          <div class="modal-header">
+            <h5 class="modal-title" id="addMpesaModalLabel">Add M-PESA Number</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="add_mpesa_number" class="form-label">M-PESA Phone Number</label>
+              <input type="text" class="form-control" id="add_mpesa_number" name="mpesa_number" placeholder="e.g. 07XXXXXXXX" required maxlength="20" value="{{ profile.mpesa_number|default:'' }}">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      {% if not profile or not profile.mpesa_number %}
+      var addModal = document.getElementById('addMpesaModal');
+      if (addModal) {
+        var modal = new bootstrap.Modal(addModal);
+        setTimeout(function () {
+          modal.show();
+        }, 250);
+      }
+      {% endif %}
+    });
+  </script>
 
   <div class="settings-section">
     <div class="d-flex justify-content-between align-items-center mb-2">

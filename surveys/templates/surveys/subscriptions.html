@@ -28,29 +28,41 @@
     position: relative;
   }
   .plan-card.premium {
-    background: linear-gradient(180deg, rgba(217, 175, 95, 0.1), rgba(17, 24, 39, 0.94));
-    border: 2px solid rgba(217, 175, 95, 0.42);
+    background: linear-gradient(180deg, rgba(217, 175, 95, 0.12), rgba(17, 24, 39, 0.94));
+    border: 2px solid rgba(217, 175, 95, 0.5);
+    box-shadow: 0 10px 24px rgba(217, 175, 95, 0.14);
+    transform: translateY(-2px);
   }
   .plan-card.expert {
-    background: linear-gradient(180deg, rgba(217, 175, 95, 0.14), rgba(17, 24, 39, 0.94));
-    border: 2px solid rgba(217, 175, 95, 0.55);
+    background: linear-gradient(180deg, rgba(247, 209, 132, 0.18), rgba(17, 24, 39, 0.98));
+    border: 2px solid rgba(247, 209, 132, 0.7);
     border-top: 5px solid var(--luxury-gold);
-    box-shadow: 0 12px 28px rgba(3, 7, 18, 0.32);
+    box-shadow: 0 18px 36px rgba(183, 122, 43, 0.25), 0 0 0 1px rgba(247, 209, 132, 0.12);
+    transform: translateY(-6px);
   }
+  .plan-card.premium .plan-price,
   .plan-card.expert .plan-price,
+  .plan-card.premium .plan-features .iconify,
   .plan-card.expert .plan-features .iconify {
     color: var(--luxury-gold-soft);
   }
+  .plan-card.premium .crown,
   .plan-card.expert .crown {
     color: var(--luxury-gold-soft);
   }
+  .plan-card.premium .popular-badge,
   .plan-card.expert .popular-badge {
-    background: rgba(217, 175, 95, 0.16);
+    background: rgba(217, 175, 95, 0.12);
     color: var(--luxury-gold-soft);
-    border: 1px solid var(--luxury-border);
+    border: 1px solid rgba(217, 175, 95, 0.45);
     border-radius: 4px;
     letter-spacing: 0.04em;
     text-transform: uppercase;
+    box-shadow: 0 8px 18px rgba(217, 175, 95, 0.12);
+  }
+  .plan-card.expert .popular-badge {
+    background: linear-gradient(135deg, rgba(217, 175, 95, 0.18), rgba(247, 209, 132, 0.12));
+    border-color: rgba(247, 209, 132, 0.7);
   }
   .plan-card .crown {
     color: #fd7e14;

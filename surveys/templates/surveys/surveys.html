@@ -222,6 +222,11 @@
       <div class="survey-card {{ survey.type }} h-100">
       {% if survey.type == 'system' %}
         <div class="mb-2" style="color:#86efac; font-weight:600;">System Survey - Always Available</div>
+        {% if system_survey_attempts >= 2 %}
+          <div class="mb-2 small text-muted">Limit reached: 2/2 attempts used</div>
+        {% elif system_survey_attempts_remaining > 0 %}
+          <div class="mb-2 small text-muted">{{ system_survey_attempts_remaining }} attempt{{ system_survey_attempts_remaining|pluralize }} left</div>
+        {% endif %}
       {% endif %}
         <div class="d-flex flex-column h-100">
           <div class="d-flex align-items-center mb-2">
@@ -250,11 +255,15 @@
           </div>
           
           <div class="text-center mb-2">
-            {% if survey.type == 'system' or has_active_subscription %}
-              <!-- System surveys (always free) or users with active subscription -->
+            {% if survey.type == 'system' %}
+              {% if system_survey_attempts >= 2 %}
+                <button type="button" class="btn btn-secondary survey-btn w-100" disabled>Limit Reached</button>
+              {% else %}
+                <a href="{% url 'take_survey' survey.title %}" class="btn btn-primary survey-btn w-100">Take Survey</a>
+              {% endif %}
+            {% elif has_active_subscription %}
               <a href="{% url 'take_survey' survey.title %}" class="btn btn-primary survey-btn w-100">Take Survey</a>
             {% else %}
-              <!-- All other surveys require subscription -->
               <button type="button" class="btn btn-primary survey-btn w-100" 
                       data-bs-toggle="modal" 
                       data-bs-target="#paidSurveyModal"

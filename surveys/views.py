@@ -14,26 +14,26 @@ def get_survey_data(survey_title):
     """Get survey data for instructions page"""
     # Survey data from the surveys list
     surveys_data = {
-        'SurveysPlus': {'reward': 100, 'estimated_time': 11, 'questions': 7},
-        'Safaricom M-PESA': {'reward': 75, 'estimated_time': 15, 'questions': 15},
-        'Equity Bank': {'reward': 50, 'estimated_time': 12, 'questions': 10},
-        'Naivas Supermarket': {'reward': 65, 'estimated_time': 12, 'questions': 10},
-        'Kenya Airways': {'reward': 80, 'estimated_time': 15, 'questions': 13},
-        'Brookside Dairy': {'reward': 45, 'estimated_time': 12, 'questions': 15},
-        'Jumia Kenya': {'reward': 70, 'estimated_time': 12, 'questions': 10},
-        'KCB Bank': {'reward': 68, 'estimated_time': 12, 'questions': 10},
-        'Twiga Foods': {'reward': 62, 'estimated_time': 9, 'questions': 6},
-        'Co-operative Bank': {'reward': 50, 'estimated_time': 8, 'questions': 9},
-        'Zuku': {'reward': 72, 'estimated_time': 11, 'questions': 7},
-        'Kipepeo Clothing': {'reward': 58, 'estimated_time': 9, 'questions': 6},
-        'KPLC': {'reward': 66, 'estimated_time': 9, 'questions': 11},
-        'Bidco Africa': {'reward': 48, 'estimated_time': 8, 'questions': 12},
-        'Safaricom Home Fibre': {'reward': 78, 'estimated_time': 11, 'questions': 10},
-        'Artcaffe': {'reward': 60, 'estimated_time': 10, 'questions': 12},
+        'SurveysPlus': {'reward': 160, 'estimated_time': 11, 'questions': 7},
+        'Safaricom M-PESA': {'reward': 210, 'estimated_time': 15, 'questions': 15},
+        'Equity Bank': {'reward': 140, 'estimated_time': 12, 'questions': 10},
+        'Naivas Supermarket': {'reward': 120, 'estimated_time': 12, 'questions': 10},
+        'Kenya Airways': {'reward': 260, 'estimated_time': 15, 'questions': 13},
+        'Brookside Dairy': {'reward': 100, 'estimated_time': 12, 'questions': 15},
+        'Jumia Kenya': {'reward': 180, 'estimated_time': 12, 'questions': 10},
+        'KCB Bank': {'reward': 170, 'estimated_time': 12, 'questions': 10},
+        'Twiga Foods': {'reward': 130, 'estimated_time': 9, 'questions': 6},
+        'Co-operative Bank': {'reward': 110, 'estimated_time': 8, 'questions': 9},
+        'Zuku': {'reward': 190, 'estimated_time': 11, 'questions': 7},
+        'Kipepeo Clothing': {'reward': 125, 'estimated_time': 9, 'questions': 6},
+        'KPLC': {'reward': 150, 'estimated_time': 9, 'questions': 11},
+        'Bidco Africa': {'reward': 115, 'estimated_time': 8, 'questions': 12},
+        'Safaricom Home Fibre': {'reward': 220, 'estimated_time': 11, 'questions': 10},
+        'Artcaffe': {'reward': 145, 'estimated_time': 10, 'questions': 12},
     }
     
     # Return survey data or default values
-    return surveys_data.get(survey_title, {'reward': 50, 'estimated_time': 10, 'questions': 5})
+    return surveys_data.get(survey_title, {'reward': 100, 'estimated_time': 10, 'questions': 5})
 
 def generate_survey_questions(survey_title):
     """Generate random questions based on survey title"""
@@ -1079,23 +1079,28 @@ def surveys_list(request):
     try:
         profile = request.user.userprofile
         has_taken_first_survey = getattr(profile, 'has_taken_first_survey', False)
+        system_survey_attempts = getattr(profile, 'system_survey_attempts', 0)
         print(f"Surveys list - User: {request.user.username}, Has taken first survey: {has_taken_first_survey}")
     except UserProfile.DoesNotExist:
         profile = None
         has_taken_first_survey = False
+        system_survey_attempts = 0
         print(f"Surveys list - User: {request.user.username}, No profile found")
     except Exception as e:
         # Handle case where migration hasn't been applied yet
         profile = None
         has_taken_first_survey = False
+        system_survey_attempts = 0
         print(f"Surveys list - User: {request.user.username}, Exception: {e}")
+    max_system_survey_attempts = 2
+    system_survey_attempts_remaining = max(max_system_survey_attempts - system_survey_attempts, 0)
     
     # Clean surveys list - System survey first, then paid surveys (no duplicates)
     surveys = [
         {
             'title': 'SurveysPlus',
             'questions': 7,
-            'reward': 100,
+            'reward': 160,
             'type': 'system',
             'status': 'always',
             'estimated_time': 11,
@@ -1106,7 +1111,7 @@ def surveys_list(request):
         {
             'title': 'Safaricom M-PESA',
             'questions': 15,
-            'reward': 75,
+            'reward': 210,
             'type': 'paid',
             'status': 'paid',
             'estimated_time': 15,
@@ -1117,7 +1122,7 @@ def surveys_list(request):
         {
             'title': 'Kenya Airways',
             'questions': 13,
-            'reward': 80,
+            'reward': 260,
             'type': 'paid',
             'status': 'paid',
             'estimated_time': 15,
@@ -1128,7 +1133,7 @@ def surveys_list(request):
         {
             'title': 'Naivas Supermarket',
             'questions': 10,
-            'reward': 65,
+            'reward': 120,
             'type': 'paid',
             'status': 'paid',
             'estimated_time': 12,
@@ -1139,7 +1144,7 @@ def surveys_list(request):
         {
             'title': 'Jumia Kenya',
             'questions': 10,
-            'reward': 70,
+            'reward': 180,
             'type': 'paid',
             'status': 'paid',
             'estimated_time': 12,
@@ -1150,7 +1155,7 @@ def surveys_list(request):
         {
             'title': 'KCB Bank',
             'questions': 10,
-            'reward': 68,
+            'reward': 170,
             'type': 'paid',
             'status': 'paid',
             'estimated_time': 12,
@@ -1161,7 +1166,7 @@ def surveys_list(request):
         {
             'title': 'Equity Bank',
             'questions': 10,
-            'reward': 50,
+            'reward': 140,
             'type': 'paid',
             'status': 'paid',
             'estimated_time': 12,
@@ -1172,7 +1177,7 @@ def surveys_list(request):
         {
             'title': 'Brookside Dairy',
             'questions': 15,
-            'reward': 45,
+            'reward': 100,
             'type': 'paid',
             'status': 'paid',
             'estimated_time': 12,
@@ -1183,7 +1188,7 @@ def surveys_list(request):
         {
             'title': 'Twiga Foods',
             'questions': 6,
-            'reward': 62,
+            'reward': 130,
             'type': 'paid',
             'status': 'paid',
             'estimated_time': 9,
@@ -1194,7 +1199,7 @@ def surveys_list(request):
         {
             'title': 'Co-operative Bank',
             'questions': 9,
-            'reward': 50,
+            'reward': 110,
             'type': 'paid',
             'status': 'paid',
             'estimated_time': 8,
@@ -1205,7 +1210,7 @@ def surveys_list(request):
         {
             'title': 'Zuku',
             'questions': 7,
-            'reward': 72,
+            'reward': 190,
             'type': 'paid',
             'status': 'paid',
             'estimated_time': 11,
@@ -1216,7 +1221,7 @@ def surveys_list(request):
         {
             'title': 'Kipepeo Clothing',
             'questions': 6,
-            'reward': 58,
+            'reward': 125,
             'type': 'paid',
             'status': 'paid',
             'estimated_time': 9,
@@ -1227,7 +1232,7 @@ def surveys_list(request):
         {
             'title': 'KPLC',
             'questions': 11,
-            'reward': 66,
+            'reward': 150,
             'type': 'paid',
             'status': 'paid',
             'estimated_time': 9,
@@ -1238,7 +1243,7 @@ def surveys_list(request):
         {
             'title': 'Bidco Africa',
             'questions': 12,
-            'reward': 48,
+            'reward': 115,
             'type': 'paid',
             'status': 'paid',
             'estimated_time': 8,
@@ -1249,7 +1254,7 @@ def surveys_list(request):
         {
             'title': 'Safaricom Home Fibre',
             'questions': 10,
-            'reward': 78,
+            'reward': 220,
             'type': 'paid',
             'status': 'paid',
             'estimated_time': 11,
@@ -1260,7 +1265,7 @@ def surveys_list(request):
         {
             'title': 'Artcaffe',
             'questions': 12,
-            'reward': 60,
+            'reward': 145,
             'type': 'paid',
             'status': 'paid',
             'estimated_time': 10,
@@ -1273,10 +1278,12 @@ def surveys_list(request):
     has_active_subscription = getattr(profile, 'has_active_subscription', False) if profile else False
     
     return render(request, 'surveys/surveys.html', {
-        'surveys': surveys, 
+        'surveys': surveys,
         'show_sidebar': True,
         'has_taken_first_survey': has_taken_first_survey,
-        'has_active_subscription': has_active_subscription
+        'has_active_subscription': has_active_subscription,
+        'system_survey_attempts': system_survey_attempts,
+        'system_survey_attempts_remaining': system_survey_attempts_remaining,
     })
 
 @login_required
@@ -1292,12 +1299,18 @@ def take_survey(request, survey_title):
     # Check if user has taken their first survey and has active subscription
     has_taken_first_survey = getattr(profile, 'has_taken_first_survey', False)
     has_active_subscription = getattr(profile, 'has_active_subscription', False)
-    
+    system_survey_attempts = getattr(profile, 'system_survey_attempts', 0)
+    max_system_survey_attempts = 2
+
     # Only "SurveysPlus" is always free, all others require subscription after first survey
     if survey_title != 'SurveysPlus' and has_taken_first_survey and not has_active_subscription:
         # Redirect to subscriptions for paid surveys
         return redirect(f'/subscriptions/?survey={survey_title}')
-    
+
+    if survey_title == 'SurveysPlus' and system_survey_attempts >= max_system_survey_attempts:
+        messages.error(request, 'This survey is available only twice per user. You have reached the limit.')
+        return redirect('surveys_list')
+
     if request.method == 'GET':
         survey_data = get_survey_data(survey_title)
         return render(request, 'surveys/survey_instructions.html', {
@@ -1326,6 +1339,8 @@ def take_survey(request, survey_title):
                 profile.has_taken_first_survey = True
                 profile.total_earnings += survey_reward
                 profile.surveys_completed += 1
+                if survey_title == 'SurveysPlus':
+                    profile.system_survey_attempts += 1
                 profile.save()
                 
                 print(f"Marked {request.user.username} as having taken first survey")

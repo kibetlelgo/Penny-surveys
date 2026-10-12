@@ -12,6 +12,7 @@ class UserProfile(models.Model):
     has_active_subscription = models.BooleanField(default=False)
     total_earnings = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     surveys_completed = models.IntegerField(default=0)
+    system_survey_attempts = models.IntegerField(default=0)
 
     def __str__(self):
         return self.user.username
