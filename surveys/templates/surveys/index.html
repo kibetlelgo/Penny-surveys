@@ -1019,80 +1019,38 @@
   <h2 class="text-center mb-4">What Our Users Say</h2>
   <div class="card shadow mb-4 mx-auto testimonial-card">
     <div class="card-body p-4">
-      <div id="testimonialCarousel" class="carousel slide testimonial-carousel">
+      <div id="testimonialCarousel" class="carousel slide testimonial-carousel" data-bs-ride="carousel" data-bs-interval="6500" data-bs-pause="hover">
     <div class="carousel-inner">
-      <div class="carousel-item active">
-            <div class="d-flex flex-column align-items-center justify-content-center text-center">
-              <div class="testimonial-stars" aria-label="5 out of 5 stars">
-                <span class="iconify" data-icon="mdi:star"></span>
-                <span class="iconify" data-icon="mdi:star"></span>
-                <span class="iconify" data-icon="mdi:star"></span>
-                <span class="iconify" data-icon="mdi:star"></span>
-                <span class="iconify" data-icon="mdi:star"></span>
-              </div>
-              <blockquote class="blockquote testimonial-quote">
-                "PennySurveys has become my go-to platform for earning extra money during my studies. The surveys are engaging and the payments are always on time!"
-            </blockquote>
-              <div class="d-flex align-items-center justify-content-center gap-2 mt-2">
-                <span class="iconify" data-icon="mdi:account-circle" style="font-size:2.2rem; color:#6366f1;"></span>
-                <div class="text-start">
-                  <div class="fw-bold" style="font-size:1.08rem;">Sarah Johnson</div>
-                  <div class="text-muted" style="font-size:0.98rem;">Student</div>
-                </div>
+      {% for testimonial in testimonials %}
+      <div class="carousel-item{% if forloop.first %} active{% endif %}">
+        <div class="d-flex flex-column align-items-center justify-content-center text-center">
+          <div class="testimonial-stars" aria-label="5 out of 5 stars">
+            <span class="iconify" data-icon="mdi:star"></span>
+            <span class="iconify" data-icon="mdi:star"></span>
+            <span class="iconify" data-icon="mdi:star"></span>
+            <span class="iconify" data-icon="mdi:star"></span>
+            <span class="iconify" data-icon="mdi:star"></span>
+          </div>
+          <blockquote class="blockquote testimonial-quote">&ldquo;{{ testimonial.quote }}&rdquo;</blockquote>
+          <div class="d-flex align-items-center justify-content-center gap-2 mt-2">
+            <span class="iconify" data-icon="mdi:account-circle" style="font-size:2.2rem; color:#6366f1;"></span>
+            <div class="text-start">
+              <div class="fw-bold" style="font-size:1.08rem;">{{ testimonial.name }}</div>
+              <div class="text-muted" style="font-size:0.98rem;">{{ testimonial.role }}</div>
+            </div>
           </div>
         </div>
       </div>
-      <div class="carousel-item">
-            <div class="d-flex flex-column align-items-center justify-content-center text-center">
-              <div class="testimonial-stars" aria-label="5 out of 5 stars">
-                <span class="iconify" data-icon="mdi:star"></span>
-                <span class="iconify" data-icon="mdi:star"></span>
-                <span class="iconify" data-icon="mdi:star"></span>
-                <span class="iconify" data-icon="mdi:star"></span>
-                <span class="iconify" data-icon="mdi:star"></span>
-              </div>
-              <blockquote class="blockquote testimonial-quote">
-                "I love how easy it is to use PennySurveys. The interface is user-friendly and the rewards are real!"
-            </blockquote>
-              <div class="d-flex align-items-center justify-content-center gap-2 mt-2">
-                <span class="iconify" data-icon="mdi:account-circle" style="font-size:2.2rem; color:#6366f1;"></span>
-                <div class="text-start">
-                  <div class="fw-bold" style="font-size:1.08rem;">James Mwangi</div>
-                  <div class="text-muted" style="font-size:0.98rem;">Entrepreneur</div>
-                </div>
-          </div>
-        </div>
-      </div>
-      <div class="carousel-item">
-            <div class="d-flex flex-column align-items-center justify-content-center text-center">
-              <div class="testimonial-stars" aria-label="5 out of 5 stars">
-                <span class="iconify" data-icon="mdi:star"></span>
-                <span class="iconify" data-icon="mdi:star"></span>
-                <span class="iconify" data-icon="mdi:star"></span>
-                <span class="iconify" data-icon="mdi:star"></span>
-                <span class="iconify" data-icon="mdi:star"></span>
-              </div>
-              <blockquote class="blockquote testimonial-quote">
-                "Quick payouts and interesting surveys! I recommend PennySurveys to anyone looking to earn online."
-            </blockquote>
-              <div class="d-flex align-items-center justify-content-center gap-2 mt-2">
-                <span class="iconify" data-icon="mdi:account-circle" style="font-size:2.2rem; color:#6366f1;"></span>
-                <div class="text-start">
-                  <div class="fw-bold" style="font-size:1.08rem;">Amina Yusuf</div>
-                  <div class="text-muted" style="font-size:0.98rem;">Freelancer</div>
-                </div>
-          </div>
-        </div>
-      </div>
+      {% endfor %}
     </div>
     <div class="testimonial-controls">
       <button class="carousel-control-custom" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev" aria-label="Previous testimonial" title="Previous testimonial">
         <span class="iconify" data-icon="mdi:chevron-left" aria-hidden="true"></span>
       </button>
       <div class="carousel-indicators">
-        <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-        <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-        <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        {% for testimonial in testimonials %}
+        <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="{{ forloop.counter0 }}"{% if forloop.first %} class="active" aria-current="true"{% endif %} aria-label="Slide {{ forloop.counter }}: {{ testimonial.name }}"></button>
+        {% endfor %}
       </div>
       <button class="carousel-control-custom" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next" aria-label="Next testimonial" title="Next testimonial">
         <span class="iconify" data-icon="mdi:chevron-right" aria-hidden="true"></span>

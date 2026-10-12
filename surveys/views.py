@@ -1011,7 +1011,74 @@ def generate_survey_questions(survey_title):
     return questions
 
 def home(request):
-    return render(request, 'surveys/index.html')
+    testimonials = [
+        {
+            'name': 'Sarah Johnson',
+            'role': 'Student',
+            'quote': 'PennySurveys has become my go-to platform for earning extra money during my studies. The surveys are engaging and the payments are always on time!',
+        },
+        {
+            'name': 'James Mwangi',
+            'role': 'Entrepreneur',
+            'quote': 'I love how easy it is to use PennySurveys. The interface is user-friendly and the rewards are real!',
+        },
+        {
+            'name': 'Amina Yusuf',
+            'role': 'Freelancer',
+            'quote': 'Quick payouts and interesting surveys! I recommend PennySurveys to anyone looking to earn online.',
+        },
+        {
+            'name': 'Sample member 04',
+            'role': 'Illustrative example',
+            'quote': 'I can scan survey topics quickly and choose one that fits the time I have.',
+        },
+        {
+            'name': 'Sample member 05',
+            'role': 'Illustrative example',
+            'quote': 'Short surveys are easy to fit into a busy day when I have a few spare minutes.',
+        },
+        {
+            'name': 'Sample member 06',
+            'role': 'Illustrative example',
+            'quote': 'I like seeing the reward and estimated time before starting a survey.',
+        },
+        {
+            'name': 'Sample member 07',
+            'role': 'Illustrative example',
+            'quote': 'The simple layout helps me find available surveys without much searching.',
+        },
+        {
+            'name': 'Sample member 08',
+            'role': 'Illustrative example',
+            'quote': 'I use the site in the evening when I have a little time to spare.',
+        },
+        {
+            'name': 'Sample member 09',
+            'role': 'Illustrative example',
+            'quote': 'The different survey topics help keep the experience interesting.',
+        },
+        {
+            'name': 'Sample member 10',
+            'role': 'Illustrative example',
+            'quote': 'It is useful to have my progress and available surveys together in one place.',
+        },
+        {
+            'name': 'Sample member 11',
+            'role': 'Illustrative example',
+            'quote': 'I can check the dashboard and see which surveys are ready to take.',
+        },
+        {
+            'name': 'Sample member 12',
+            'role': 'Illustrative example',
+            'quote': 'The instructions help me know what to expect before I begin a survey.',
+        },
+        {
+            'name': 'Sample member 13',
+            'role': 'Illustrative example',
+            'quote': 'It is a straightforward way to share feedback in my spare time.',
+        },
+    ]
+    return render(request, 'surveys/index.html', {'testimonials': testimonials})
 
 def register(request):
     if request.method == 'POST':
