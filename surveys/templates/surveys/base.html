@@ -815,6 +815,7 @@
     }
   }
 </style>
+{% if request.path == '/' or request.path == '/dashboard/' %}
 <aside class="payout-demo" role="status" aria-live="polite" aria-label="Withdrawal activity preview">
   <button class="payout-demo__close" type="button" aria-label="Dismiss sample activity" onclick="this.closest('.payout-demo').remove()">
     <span class="iconify" data-icon="mdi:close" aria-hidden="true"></span>
@@ -861,5 +862,6 @@
     window.setTimeout(rotateExample, 3000);
   })();
 </script>
+{% endif %}
 </body>
 </html> 
